@@ -1,18 +1,29 @@
-
 import pygame.sprite
 
 from config import *
 from sprites import GameSprite
 from utils import load_image
+from sprites.animated_sprite import AnimatedSprite
 
 
-class Fish(GameSprite):
+class Fish(GameSprite, AnimatedSprite):
+    SHEET = load_image("fish.png")
+    COLUMNS = 6
+    ROWS = 1
+    MARGIN_RIGHT = 150
+    MARGIN_BOTTOM = 0
+    COUNT_FRAMES = 1 * 6
+    SPF = 1
     player = pygame.sprite.Sprite
 
     def __init__(self, x, y, width, height):
-        self.IMAGE = pygame.transform.smoothscale(load_image('DOS-Killerfish.jpg'), (width, height))
-        self.IMAGE = pygame.transform.flip(self.IMAGE, True, False)
+        self.IMAGE = pygame.transform.smoothscale(load_image('fish.png'), (width, height))
         super().__init__(x, y, width, height)
+        self.FRAMES = [pygame.transform.smoothscale(frame, (width, height)) for frame in self.FRAMES]
+        self.cur_frame = 0
+        self.frame_duration = self.SPF
+        self.image = self.FRAMES[0]
+        self.rect = self.IMAGE.get_rect()
 
     def update(self):
         target_x, target_y = self.player.rect.center
@@ -24,15 +35,20 @@ class Fish(GameSprite):
 
         if pygame.sprite.collide_mask(self, self.player):
             self.player.lives -= 0.01
+        self.frame_duration -= 1
+        if not self.frame_duration:
+            self.frame_duration = self.SPF
+            self.cur_frame = (self.cur_frame + 1) % self.COUNT_FRAMES
+            self.image = self.FRAMES[self.cur_frame]
 
 
 class BigFish(Fish):
     target_fish = pygame.sprite.Sprite
+
     def __init__(self, x, y, width, height):
-        self.IMAGE = pygame.transform.smoothscale(load_image('DOS-Killerfish.jpg'), (width, height))
+        self.IMAGE = pygame.transform.smoothscale(load_image('fish.png'), (width, height))
         self.IMAGE = pygame.transform.flip(self.IMAGE, True, False)
         super().__init__(x, y, width, height)
-
 
     def update(self):
         if self.target_fish.alive():

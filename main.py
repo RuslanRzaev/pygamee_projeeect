@@ -1,5 +1,3 @@
-from datetime import datetime
-from config import *
 from utils import *
 
 pygame.init()
@@ -16,7 +14,7 @@ def level1():
     shakes_start_time = 3
     shakes_end_time = 7
     shakes_intensity = 3
-    TIME_GAME = 90
+    TIME_GAME = 60
     font = pygame.font.Font(None, 32)
     frame_now = 0
     pygame.display.set_caption('Звездные войны. 1 эпизод')
