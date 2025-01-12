@@ -1,3 +1,5 @@
+import textwrap
+from config import *
 import pygame
 
 from utils import load_image
@@ -22,8 +24,22 @@ def parsed_dialog():
         parsed_dialogs.append({"character": character, "text": text, "start": start, "end": end})
     return parsed_dialogs
 
+def generate_dialogs(TIME_GAME, screen):
+    for dialog in parsed_dialog():
+        if dialog['start'] <= TIME_GAME <= dialog['end']:
+            lines = textwrap.wrap(dialog['text'], 40)
+            rect_text = pygame.draw.rect(screen, pygame.Color('gray'), (50, HEIGHT - 120, WIDTH - 100, 100))
+            screen.blit(character_images[dialog['character']], (60, rect_text.center[1] - 50))
+            y = rect_text.top + 10
+            for line in lines:
+                text = pygame.font.Font(None, 32).render(line, True, pygame.Color('white'))
+                screen.blit(text, (150, y))
+                y += 30
+            break
+
 character_images = {
         'ja': pygame.transform.smoothscale(load_image('ja.png', -1), (80, 80)),
         'kwaigoi': pygame.transform.smoothscale(load_image('kwaigoi.png', -1), (80, 80)),
         'obi_van': pygame.transform.smoothscale(load_image('obi_van.png', -1), (80, 80)),
     }
+
