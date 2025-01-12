@@ -109,6 +109,14 @@ class Scene3:
 
             if final:
                 BG_MUSIC_BATTLE.stop()
+                if result:
+                    VICTORY_SOUND.play()
+                else:
+                    LOST_SOUND.play()
+                if not showed_ship_a:
+                    utils.add_to_db_sqlite(3, self.current_attempt, title1, desc1, 'ACHIEVEMENT_3_1',
+                                       str(datetime.now())[:-7],
+                                       'False')
                 self.success = result
                 pause = True
                 alpha = -10
@@ -120,6 +128,7 @@ class Scene3:
                     win_bg = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA).convert()
                     if used_lives == 0:
                         if not showed_health_a:
+                            achievement_health.draw_n_move(self.window, 5)
                             utils.add_to_db_sqlite(3, self.current_attempt, title2, desc2, 'ACHIEVEMENT_3_1',
                                                    str(datetime.now())[:-7],
                                                    str(self.success))
@@ -128,7 +137,7 @@ class Scene3:
 
 
                     if result:
-                        win_bg.fill((46, 35, 108))
+                        win_bg.fill((11, 9, 27))
                     else:
                         win_bg.fill((52, 14, 16))
                     if alpha <= 45:
@@ -137,12 +146,10 @@ class Scene3:
                     self.window.blit(win_bg, (0, 0))
                     self.window.blit(BUTTON_NEXT, (WIDTH / 2 - BUTTON_NEXT.get_width() / 2, 500))
                     if result:
-                        VICTORY_SOUND.play()
                         label = lost_font.render(f"You Won!!!", True, (255, 255, 255))
                         self.window.blit(label, (WIDTH / 2 - label.get_width() / 2, 250))
 
                     else:
-                        LOST_SOUND.play()
                         label = lost_font.render(f"You Lost!!!", True, (255, 255, 255))
                         self.window.blit(label, (WIDTH / 2 - label.get_width() / 2, 250))
 
