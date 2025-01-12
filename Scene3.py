@@ -22,7 +22,7 @@ class Scene3:
         self.lives = lives
         self.success = False
         len_db = self.con.execute("select count(*) from level3").fetchone()
-        self.current_attempt = len_db[0] + 1
+        self.current_attempt = len_db[0]
         self.window = window
 
     def gameplay(self):
@@ -108,6 +108,7 @@ class Scene3:
 
 
             if final:
+                BG_MUSIC_BATTLE.stop()
                 self.success = result
                 pause = True
                 alpha = -10
@@ -127,7 +128,7 @@ class Scene3:
 
 
                     if result:
-                        win_bg.fill((255, 165, 70))
+                        win_bg.fill((46, 35, 108))
                     else:
                         win_bg.fill((52, 14, 16))
                     if alpha <= 45:

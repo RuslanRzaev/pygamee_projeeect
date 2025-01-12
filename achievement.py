@@ -18,7 +18,7 @@ class Achievement:
     def draw_n_move(self, window, vel):
         if self.time_count >= 360:
             if self.x < 1000:
-                self.x += vel
+                self.x += vel * 2
         else:
             if self.x > WIDTH - self.img_bg.get_width():
                 self.x -= vel
