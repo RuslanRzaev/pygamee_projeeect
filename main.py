@@ -124,7 +124,7 @@ class Scene3:
                         if not showed_health_a:
                             utils.add_to_db_sqlite(3, self.current_attempt, title2, desc2, 'ACHIEVEMENT_3_1',
                                                    str(datetime.now())[:-7],
-                                                   'True')
+                                                   str(self.success))
                             showed_health_a = True
                         achievement_health.draw_n_move(WIN, 5)
 
