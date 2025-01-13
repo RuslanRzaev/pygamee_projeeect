@@ -1,6 +1,6 @@
 from config import *
-from laser import Laser
-from ship import Ship
+from level3_objs.laser import Laser
+from level3_objs.ship import Ship
 
 
 class Enemy(Ship):

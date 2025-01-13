@@ -139,7 +139,7 @@ class Scene3:
                         win_bg.fill((11, 9, 27))
                     else:
                         win_bg.fill((52, 14, 16))
-                    if alpha <= 45:
+                    if alpha <= 60:
                         alpha += 0.1
                     win_bg.set_alpha(alpha)
                     self.window.blit(win_bg, (0, 0))

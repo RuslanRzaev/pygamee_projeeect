@@ -1,5 +1,4 @@
 from config import *
-from laser import Laser
 
 
 class SpaceStation:

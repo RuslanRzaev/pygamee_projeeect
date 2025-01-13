@@ -1,7 +1,7 @@
 import pygame.sprite
 
 from config import *
-from laser import Laser
+from level3_objs.laser import *
 
 
 class Ship(pygame.sprite.Sprite):
