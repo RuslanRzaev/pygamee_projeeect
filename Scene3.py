@@ -1,17 +1,16 @@
 import math
 import random
-import sqlite3
 from datetime import datetime
 
 import pygame.display
 
 import utils
-from achievement import Achievement
-from asteroid_ import Asteroid
+from level3_objs.achievement import Achievement
+from level3_objs.asteroid_ import Asteroid
 from config import *
-from enemy import Enemy
-from player import Player
-from space_station import SpaceStation
+from level3_objs.enemy import Enemy
+from level3_objs.player import Player
+from level3_objs.space_station import SpaceStation
 from utils import *
 
 pygame.font.init()

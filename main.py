@@ -1,7 +1,6 @@
-import utils
 from Scene3 import *
 from config import *
-from text import episode_text
+from level3_objs.text import episode_text
 
 pygame.font.init()
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
