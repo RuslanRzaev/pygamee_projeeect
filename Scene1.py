@@ -20,7 +20,7 @@ class Scene1:
         shakes_start_time = 3
         shakes_end_time = 7
         shakes_intensity = 3
-        TIME_GAME = 60
+        TIME_GAME = 0
         font = pygame.font.Font(None, 32)
         frame_now = 0
         pygame.display.set_caption('Звездные войны. 1 эпизод')
@@ -59,16 +59,12 @@ class Scene1:
             # тряска
             shakes(shakes_start_time, shakes_end_time, shakes_intensity, TIME_GAME, self.window, BACKGROUND_IMAGE)
 
-            if player.point >= 4:
-                pygame.mixer.music.stop()
-                running = False
-
             if player.lives == 0:
                 pygame.mixer.music.stop()
                 running = False
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    terminate()
+                    quit()
                 elif event.type == PLAYER_HIT:
                     shakes_start_time = TIME_GAME
                     shakes_end_time = TIME_GAME + 2
