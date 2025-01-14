@@ -1,5 +1,6 @@
 import os
 import random
+import sqlite3 as sq
 import sys
 from config import *
 
@@ -144,6 +145,15 @@ def shakes(shakes_start_time, shakes_end_time, shakes_intensity, TIME_GAME, scre
                              TIME_GAME)
     screen.blit(BACKGROUND_IMAGE, (0 + moved_x, 0 + moved_y))
 
+
+def get_achievements():
+    achievements = []
+    conn = sq.connect('test.db')
+    cursor = conn.cursor()
+    for i in range(1, 2):
+        cursor.execute(f'SELECT * FROM level{i}')
+        achievements.extend([achievement + (i,) for achievement in cursor.fetchall()])
+    return achievements
 
 PLAYER_HIT = pygame.event.custom_type()
 GAME_STOP = pygame.event.custom_type()

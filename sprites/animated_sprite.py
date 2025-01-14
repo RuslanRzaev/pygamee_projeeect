@@ -22,7 +22,6 @@ class AnimatedSprite(pygame.sprite.Sprite):
             cls.cut_sheet(cls.SHEET, cls.COLUMNS, cls.ROWS)
         return super().__new__(cls)
 
-
     @classmethod
     def cut_sheet(
             cls,

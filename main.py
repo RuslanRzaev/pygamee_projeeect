@@ -1,7 +1,7 @@
 from utils import *
 
 pygame.init()
-
+from start_screen import start_screen
 pygame.mixer.init()
 pygame.mixer.music.load("data/sound/game_sound.mp3")
 problem_sound = pygame.mixer.Sound('data/sound/звуктревоги.mp3')
@@ -14,7 +14,7 @@ def level1():
     shakes_start_time = 3
     shakes_end_time = 7
     shakes_intensity = 3
-    TIME_GAME = 60
+    TIME_GAME = 0
     font = pygame.font.Font(None, 32)
     frame_now = 0
     pygame.display.set_caption('Звездные войны. 1 эпизод')
@@ -47,7 +47,7 @@ def level1():
     dark_surface.fill(pygame.Color('black'))
 
     running = True
-
+    start_screen()
     while running:
         frame_now += 1
         # тряска
@@ -65,7 +65,6 @@ def level1():
             elif event.type == GAME_STOP:
                 pygame.mixer.music.stop()
                 running = False
-
 
         all_sprites.update()
 
