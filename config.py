@@ -7,7 +7,7 @@ pygame.init()
 SIZE = WIDTH, HEIGHT = 1000, 750
 FPS = 60
 
-LIVES = 5
+LIVES = 15
 
 BACKGROUND = pygame.Color('black')  # изначальный цвет окна(пока всё прогрузится
 PLAYER_WIDTH = 100  # ширина игрока
@@ -27,7 +27,6 @@ MAX_FALL_SPEED = 1  # максимальная скорость падения
 DISTANCE_BETWEEN_COLUMN_TOP_BOTTOM = 200  # расстояние между двумя колоннами(пара)
 DISTANCE_BETWEEN_COLUMN = 700  # расстояние между колоннами
 MARGIN_COLON = 50  # Чтобы препятсвия не слипались с краями экрана
-ACHIEVEMENT_3_1 = 'data/img/icon_arch'
 GRAVITY = 0.25  # гравитация
 POWER_JUMP = -2  # сила прыжка
 
@@ -52,6 +51,10 @@ ASTEROID_R3 = pygame.image.load(os.path.join("data", "img", "asteroid2.png"))
 ASTEROID_R4 = pygame.image.load(os.path.join("data", "img","asteroid3.png"))
 
 BG = pygame.transform.scale(pygame.image.load(os.path.join("data", "img", "background-black.png")), (WIDTH, HEIGHT))
+KARASIKI = pygame.transform.scale(pygame.image.load(os.path.join("data", "img", "карасики.png")), (160, 100))
+
+MAIN_FONT = pygame.font.SysFont("comicsans", 50)
+LOST_FONT = pygame.font.SysFont("comicsans", 60)
 
 TIME_POINT = 60
 

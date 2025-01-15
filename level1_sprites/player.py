@@ -15,7 +15,7 @@ class Player(GameSprite):
     def __init__(self, x, y, width, height):
         self.IMAGE = pygame.transform.smoothscale(load_image('player2.png'), (width, height))
         super().__init__(x, y, width, height)
-        self._lives = 10
+        self._lives = LIVES
         self.point = 0
         self._gasoline_level = 100
         self.speed_y = 0

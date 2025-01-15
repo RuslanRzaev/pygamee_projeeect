@@ -1,11 +1,15 @@
 import random
 import sqlite3
 import sys
+from datetime import datetime
 
 from config import *
 import pygame
 
+from level3_objs.achievement import Achievement
+
 con = sqlite3.connect("db/game.db")
+cur = con.cursor()
 screen = pygame.display.set_mode(SIZE)
 
 def collide(obj1, obj2):
@@ -19,16 +23,23 @@ def text_bg(label, col=(45, 131, 182)):
 
     return text_bg
 
-def add_to_db_sqlite(level, attempt, title, desc, img, date, achieved='False'):
-    print(level, attempt, title, desc, img, date, achieved)
-    try:
-        con.execute(f"""INSERT INTO level{str(level)} (attempt, title, description, image, date, achieved)
-                    VALUES ('{attempt}', '{title}', '{desc}', '{img}', '{date}', '{achieved}');""").fetchall()
-    except sqlite3.IntegrityError:
-        con.execute(f"""INSERT INTO level{str(level)} (attempt, title, description, image, date, achieved)
-                            VALUES ('{attempt + 1}', '{title}', '{desc}', '{img}', '{date}', '{achieved}');""").fetchall()
+def add_to_db_sqlite(level, attempt, title, desc, img, date, achieved=0):
+    con.execute(f"""INSERT INTO level{str(level)} (attempt, title, description, image, date, achieved)
+                    VALUES ('{attempt}', '{title}', '{desc}', 'data/img/{img}', '{date}', {achieved});""").fetchall()
     con.commit()
 
+
+def delete_duplicates_sqlite(level):
+    con.execute(f"""DELETE FROM level{str(level)}
+                    WHERE ROWID NOT IN (
+                    SELECT MAX(ROWID)
+                    FROM level{str(level)}
+                    GROUP BY attempt,
+                    title,
+                    description,
+                    image,
+                    achieved);""")
+    con.commit()
 
 def load_image(
         name: str,
@@ -51,7 +62,6 @@ def load_image(
 
 def terminate() -> None:
     pygame.quit()
-    sys.exit()
 
 
 def generate_obstacles(objtop, objbottom):
@@ -127,8 +137,23 @@ def show_devices(screen, player, font):
     time = font.render(f'Глубина: {int(player.rect.y)}', True, pygame.Color('black'))
     screen.blit(time, (WIDTH - 200, 60))
 
+title1 = 'Рыбы дуреют с этой прикормки'
+desc1 = 'Успешно сбежать от хищных рыб'
+
+title2 = 'Крутой Джа-Джа'
+desc2 = 'Не умереть на первом уровне'
+
+achievement_fish = Achievement(1100, 100, ACHIEVEMENT_BG, title1, desc1, KARASIKI)
+
+achievement_ja_ja = Achievement(1100, 100, ACHIEVEMENT_BG, title2, desc2, ACHIEVEMENT_3_1)
+
+showed_a = False
+showed_a_ja = False
+len_db_level_1 = con.execute("select count(*) from level1").fetchone()
+current_attempt = len_db_level_1[0]
 
 def timings(screen, problem_sound, TIME_GAME, fish_group, big_fish_group, font, player):
+    global showed_a, showed_a_ja
     if 55 < TIME_GAME < 60:
         text = font.render(f'РЫБА ГУБЕР СОВСЕМ БЛИЗКА', True, pygame.Color('RED'))
         text1 = font.render(f'ПРИГОТОВЬТЕСЬ К УСКОРЕНИЮ!(SHIFT)', True, pygame.Color('RED'))
@@ -146,6 +171,16 @@ def timings(screen, problem_sound, TIME_GAME, fish_group, big_fish_group, font, 
         big_fish_group.update()
         problem_sound.stop()
 
+
+    if 80 < TIME_GAME < 120:
+        if not showed_a:
+            add_to_db_sqlite(1, current_attempt, title1, desc1, 'карасики.png',
+                               str(datetime.now())[:-7],
+                               1)
+            showed_a = True
+        achievement_fish.draw_n_move(screen, 10)
+
+
     if 140 < TIME_GAME < 165:
         font = pygame.font.Font(None, 32)
         time = font.render(f'Неисправный мотор!', True, pygame.Color('yellow'))
@@ -156,12 +191,18 @@ def timings(screen, problem_sound, TIME_GAME, fish_group, big_fish_group, font, 
     if TIME_GAME > 165:
         problem_sound.stop()
 
-    if TIME_GAME > 196:
+    if TIME_GAME > 100: # 196
         player.gasoline_level = 0
         player.rect.x += 5
         player.rect.y -= 3
+        if not showed_a_ja:
+            add_to_db_sqlite(1, current_attempt, title2, desc2, 'ACHIEVEMENT_3_1',
+                               str(datetime.now())[:-7],
+                               1)
+            showed_a_ja = True
+        achievement_ja_ja.draw_n_move(screen, 10)
 
-    if TIME_GAME > 199:
+    if TIME_GAME > 115: # 199
         pygame.event.post(pygame.event.Event(GAME_STOP))
 
 
@@ -169,6 +210,14 @@ def shakes(shakes_start_time, shakes_end_time, shakes_intensity, TIME_GAME, scre
     moved_x, moved_y = shake(shakes_start_time, shakes_end_time, shakes_intensity,
                              TIME_GAME)
     screen.blit(BACKGROUND_IMAGE, (0 + moved_x, 0 + moved_y))
+
+
+def get_achievements():
+    achievements = []
+    for i in range(1, 2):
+        cur.execute(f'SELECT * FROM level{i}')
+        achievements.extend([achievement + (i,) for achievement in cur.fetchall()])
+    return achievements
 
 
 PLAYER_HIT = pygame.event.custom_type()

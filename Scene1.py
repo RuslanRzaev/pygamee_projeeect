@@ -20,7 +20,7 @@ class Scene1:
         shakes_start_time = 3
         shakes_end_time = 7
         shakes_intensity = 3
-        TIME_GAME = 0
+        TIME_GAME = 79
         font = pygame.font.Font(None, 32)
         frame_now = 0
         pygame.display.set_caption('Звездные войны. 1 эпизод')
@@ -59,7 +59,7 @@ class Scene1:
             # тряска
             shakes(shakes_start_time, shakes_end_time, shakes_intensity, TIME_GAME, self.window, BACKGROUND_IMAGE)
 
-            if player.lives == 0:
+            if player.lives < 1:
                 pygame.mixer.music.stop()
                 running = False
             for event in pygame.event.get():
@@ -108,4 +108,62 @@ class Scene1:
 
             pygame.display.flip()
             clock.tick(FPS)
-        self.lives = player.lives
+        self.lives = round(player.lives)
+        if self.lives > 0:
+            self.success = True
+        else:
+            add_to_db_sqlite(1, current_attempt, 'Крутой Джа-Джа', 'Не умереть на первом уровне', 'ACHIEVEMENT_3_1',
+                             str(datetime.now())[:-7],
+                             1)
+        delete_duplicates_sqlite(1)
+        alpha = -10
+
+        pause = True
+        if self.success:
+            label_1_txt = "This is where the fun begins..."
+            VICTORY_SOUND.play()
+        else:
+            label_1_txt = "Returning to the start screen :("
+            LOST_SOUND.play()
+
+
+
+        while pause:
+            win_bg = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA).convert()
+            if self.success:
+                win_bg.fill((2, 62, 138))
+            else:
+                win_bg.fill((52, 14, 16))
+            if alpha <= 60:
+                alpha += 0.1
+            win_bg.set_alpha(alpha)
+            self.window.blit(win_bg, (0, 0))
+            self.window.blit(BUTTON_NEXT, (WIDTH / 2 - BUTTON_NEXT.get_width() / 2, 500))
+            if self.success:
+                label = LOST_FONT.render(f"You Won!!!", True, (255, 255, 255))
+                self.window.blit(label, (WIDTH / 2 - label.get_width() / 2, 250))
+
+            else:
+                label = LOST_FONT.render(f"You Lost!!!", True, (255, 255, 255))
+                self.window.blit(label, (WIDTH / 2 - label.get_width() / 2, 250))
+
+            label1 = LOST_FONT.render(label_1_txt, 1, (255, 255, 255))
+
+            self.window.blit(label1, (WIDTH / 2 - label1.get_width() / 2, 460))
+
+            pygame.display.update()
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.success:
+                        VICTORY_SOUND.stop()
+                    else:
+                        LOST_SOUND.stop()
+                    pause = False
+
+                if event.type == pygame.QUIT:
+                    pause = False
+                    if self.success:
+                        VICTORY_SOUND.stop()
+                    else:
+                        LOST_SOUND.stop()
+            pygame.display.flip()

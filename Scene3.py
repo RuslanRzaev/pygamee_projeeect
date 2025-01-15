@@ -32,8 +32,6 @@ class Scene3:
         run = True
 
         lives = self.lives
-        main_font = pygame.font.SysFont("comicsans", 50)
-        lost_font = pygame.font.SysFont("comicsans", 60)
         time_point = TIME_POINT
         b = False
 
@@ -93,7 +91,7 @@ class Scene3:
                 self.window.blit(bg, (0, i * bg_height + scroll - bg_height))
 
             # draw text
-            lives_label = main_font.render(f"Lives: {lives}", 1, (255, 255, 255))
+            lives_label = MAIN_FONT.render(f"Lives: {lives}", 1, (255, 255, 255))
 
             self.window.blit(lives_label, (10, 10))
 
@@ -115,13 +113,13 @@ class Scene3:
                 if not showed_ship_a:
                     utils.add_to_db_sqlite(3, self.current_attempt, title1, desc1, 'ACHIEVEMENT_3_1',
                                        str(datetime.now())[:-7],
-                                       'False')
+                                       0)
                 self.success = result
                 pause = True
-                alpha = -10
                 used_lives = self.lives - lives
                 self.lives = lives
                 showed_health_a = False
+                alpha = -10
 
                 while pause:
                     win_bg = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA).convert()
@@ -130,13 +128,14 @@ class Scene3:
                             achievement_health.draw_n_move(self.window, 5)
                             utils.add_to_db_sqlite(3, self.current_attempt, title2, desc2, 'ACHIEVEMENT_3_1',
                                                    str(datetime.now())[:-7],
-                                                   str(self.success))
+                                                   1 if self.success else 0)
                             showed_health_a = True
-                        achievement_health.draw_n_move(self.window, 5)
+                        if achievement_health.x <= 1000:
+                            achievement_health.draw_n_move(self.window, 5)
 
 
                     if result:
-                        win_bg.fill((11, 9, 27))
+                        win_bg.fill((2, 62, 198))
                     else:
                         win_bg.fill((52, 14, 16))
                     if alpha <= 60:
@@ -145,16 +144,16 @@ class Scene3:
                     self.window.blit(win_bg, (0, 0))
                     self.window.blit(BUTTON_NEXT, (WIDTH / 2 - BUTTON_NEXT.get_width() / 2, 500))
                     if result:
-                        label = lost_font.render(f"You Won!!!", True, (255, 255, 255))
+                        label = LOST_FONT.render(f"You Won!!!", True, (255, 255, 255))
                         self.window.blit(label, (WIDTH / 2 - label.get_width() / 2, 250))
 
                     else:
-                        label = lost_font.render(f"You Lost!!!", True, (255, 255, 255))
+                        label = LOST_FONT.render(f"You Lost!!!", True, (255, 255, 255))
                         self.window.blit(label, (WIDTH / 2 - label.get_width() / 2, 250))
 
-                    label1 = lost_font.render(f"Kill count: {player.kill_count + 1}", 1, (255, 255, 255))
-                    label2 = lost_font.render(f"Lives used: {used_lives}", 1, (255, 255, 255))
-                    label3 = lost_font.render(f"Time count: {time_count / 60:.2f} seconds", 1, (255, 255, 255))
+                    label1 = LOST_FONT.render(f"Kill count: {player.kill_count + 1}", 1, (255, 255, 255))
+                    label2 = LOST_FONT.render(f"Lives used: {used_lives}", 1, (255, 255, 255))
+                    label3 = LOST_FONT.render(f"Time count: {time_count / 60:.2f} seconds", 1, (255, 255, 255))
 
                     self.window.blit(label1, (WIDTH / 2 - label1.get_width() / 2, 320))
 
@@ -207,7 +206,7 @@ class Scene3:
             if player.kill_count == enemies_count:
                 if not showed_ship_a:
                     utils.add_to_db_sqlite(3, self.current_attempt, title1, desc1, 'ACHIEVEMENT_3_1', str(datetime.now())[:-7],
-                                     'True')
+                                     1)
                     showed_ship_a = True
                 achievement_ships.draw_n_move(self.window, 5)
 
