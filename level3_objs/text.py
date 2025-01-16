@@ -22,11 +22,9 @@ def episode_text(text_img, text2=None, text3=None):
     if text2 is not None and text3 is not None:
         btn_y = text_y + text_height + text2.get_height() + text3.get_height() + 150
     else:
-        btn_y = text_y + text_height + 200
+        btn_y = text_y + text_height + 300
 
     vel = 1.2
-
-    rect = BUTTON_NEXT.get_rect()
 
     clock = pygame.time.Clock()
 
