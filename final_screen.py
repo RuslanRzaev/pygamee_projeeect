@@ -24,7 +24,7 @@ def final_screen(lives_left, current_attempt, window):
         while run:
             window.blit(pygame.transform.scale(VICTORY_BG, (WIDTH, screen.get_height())), (0, 0))
             window.blit(BUTTON_NEXT, (WIDTH / 2 - BUTTON_NEXT.get_width() / 2, screen.get_height() - 110))
-            label = MAIN_FONT.render(f"You saved The Republic!!!", True, (255, 255, 255))
+            label = MAIN_FONT.render(f"Вы спасли республику!!!", True, (255, 255, 255))
             window.blit(label, (WIDTH / 2 - label.get_width() / 2, 10))
 
 
