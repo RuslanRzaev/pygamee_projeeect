@@ -5,12 +5,10 @@ from config import *
 pygame.init()
 
 class Scene1:
-    def __init__(self, lives, window):
-        self.con = sqlite3.connect("db/game.db")
+    def __init__(self, lives, window, attempt):
         self.lives = lives
         self.success = False
-        len_db = self.con.execute("select count(*) from level3").fetchone()
-        self.current_attempt = len_db[0]
+        self.current_attempt = attempt
         self.window = window
         pygame.mixer.init()
         pygame.mixer.music.load("data/sound/game_sound.mp3")

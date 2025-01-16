@@ -16,12 +16,11 @@ from utils import *
 pygame.font.init()
 
 class Scene3:
-    def __init__(self, lives, window):
+    def __init__(self, lives, window, current_attempt):
         self.con = sqlite3.connect("db/game.db")
         self.lives = lives
         self.success = False
-        len_db = self.con.execute("select count(*) from level3").fetchone()
-        self.current_attempt = len_db[0]
+        self.current_attempt = current_attempt
         self.window = window
 
     def gameplay(self):

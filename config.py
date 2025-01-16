@@ -51,9 +51,16 @@ ASTEROID_R3 = pygame.image.load(os.path.join("data", "img", "asteroid2.png"))
 ASTEROID_R4 = pygame.image.load(os.path.join("data", "img","asteroid3.png"))
 
 BG = pygame.transform.scale(pygame.image.load(os.path.join("data", "img", "background-black.png")), (WIDTH, HEIGHT))
+
+VICTORY_BG = pygame.image.load(os.path.join("data", "img", "victory_bg.png"))
+
+CHECK_MARK = pygame.transform.scale(pygame.image.load(os.path.join("data", "img", "check_mark.png")), (50, 50))
+CROSS = pygame.transform.scale(pygame.image.load(os.path.join("data", "img", "cross.png")), (50, 50))
+
 KARASIKI = pygame.transform.scale(pygame.image.load(os.path.join("data", "img", "карасики.png")), (160, 100))
 
 MAIN_FONT = pygame.font.SysFont("comicsans", 50)
+REGULAR_FONT = pygame.font.SysFont("comicsans", 40)
 LOST_FONT = pygame.font.SysFont("comicsans", 60)
 
 TIME_POINT = 60

@@ -25,7 +25,7 @@ def text_bg(label, col=(45, 131, 182)):
 
 def add_to_db_sqlite(level, attempt, title, desc, img, date, achieved=0):
     con.execute(f"""INSERT INTO level{str(level)} (attempt, title, description, image, date, achieved)
-                    VALUES ('{attempt}', '{title}', '{desc}', 'data/img/{img}', '{date}', {achieved});""").fetchall()
+                    VALUES ('{attempt}', '{title}', '{desc}', '{img}', '{date}', {achieved});""").fetchall()
     con.commit()
 
 
@@ -174,7 +174,7 @@ def timings(screen, problem_sound, TIME_GAME, fish_group, big_fish_group, font, 
 
     if 80 < TIME_GAME < 120:
         if not showed_a:
-            add_to_db_sqlite(1, current_attempt, title1, desc1, 'карасики.png',
+            add_to_db_sqlite(1, current_attempt, title1, desc1, 'KARASIKI',
                                str(datetime.now())[:-7],
                                1)
             showed_a = True
@@ -212,10 +212,10 @@ def shakes(shakes_start_time, shakes_end_time, shakes_intensity, TIME_GAME, scre
     screen.blit(BACKGROUND_IMAGE, (0 + moved_x, 0 + moved_y))
 
 
-def get_achievements():
+def get_achievements(attempt):
     achievements = []
-    for i in range(1, 2):
-        cur.execute(f'SELECT * FROM level{i}')
+    for i in range(1, 4):
+        cur.execute(f'SELECT * FROM level{i} WHERE attempt = {attempt}')
         achievements.extend([achievement + (i,) for achievement in cur.fetchall()])
     return achievements
 
