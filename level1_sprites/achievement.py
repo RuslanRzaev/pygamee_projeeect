@@ -30,5 +30,4 @@ class Achievement:
             window.blit(title, (self.x + self.icon.get_width(), self.y))
             f_size = 20
             description = pygame.font.SysFont("comicsans", f_size).render(f"{self.desc}", True, (255, 255, 255))
-
             window.blit(description, (self.x + self.icon.get_width(), self.y + title.get_height()))

@@ -1,6 +1,9 @@
+import sqlite3
+
 import pygame
 import sys
 from utils import load_image, get_achievements, terminate
+from config import *
 
 pygame.init()
 
@@ -74,7 +77,7 @@ class Achievement:
         screen.blit(pygame.transform.scale(self.image, (50, 50)), (x, y))
         name = font.render(self.name, True, BUTTON_COLOR)
         screen.blit(name, (x + 60, y))
-        if self.check == 'True':
+        if self.check == 1:
             screen.blit(CHECK_MARK, (750, y))
         else:
             screen.blit(CROSS, (750, y))
@@ -190,7 +193,7 @@ def start_screen():
 
         for event in events:
             if event.type == pygame.QUIT:
-                terminate()
+                running = False
             elif event.type == lets_go:
                 running = False
 
@@ -202,6 +205,5 @@ def start_screen():
             draw_achievement_more(events)
         elif current_screen == SCREEN_ABOUT_AUTHOR:
             draw_about_the_authors(events)
-
         pygame.display.update()
         clock.tick(FPS)

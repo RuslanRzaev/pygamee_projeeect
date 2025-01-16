@@ -1,6 +1,7 @@
 import pygame
 
 from config import *
+from utils import load_image
 
 
 class AchievementFinal:
@@ -8,7 +9,7 @@ class AchievementFinal:
         self.attempt = attempt
         self.title = title
         self.description_date_lev = f"{description}   {date}   (Уровень {level})"
-        self.icon = icon_path
+        self.icon = load_image(icon_path)
         self.bg = pygame.transform.scale(ACHIEVEMENT_BG, (900, 100))
         self.date = date
         self.achieved = achieved
@@ -22,7 +23,7 @@ class AchievementFinal:
         screen.blit(title, (x, y + 10))
         screen.blit(desc, (x, y + 55))
 
-        screen.blit(pygame.transform.scale(eval(self.icon), (100, 100)), (x + self.bg.get_width() - 150, y))
+        screen.blit(pygame.transform.scale(self.icon, (100, 100)), (x + self.bg.get_width() - 150, y))
         if self.achieved == 1:
             screen.blit(CHECK_MARK, (x + 850, y + CHECK_MARK.get_height() / 2))
         else:

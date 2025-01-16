@@ -110,9 +110,9 @@ class Scene1:
         if self.lives > 0:
             self.success = True
         else:
-            add_to_db_sqlite(1, current_attempt, 'Крутой Джа-Джа', 'Не умереть на первом уровне', 'ACHIEVEMENT_3_1',
+            add_to_db_sqlite(1, current_attempt, 'Крутой Джа-Джа', 'Не умереть на первом уровне', 'карасики.png',
                              str(datetime.now())[:-7],
-                             1)
+                             0)
         delete_duplicates_sqlite(1)
         alpha = -10
 
@@ -147,7 +147,7 @@ class Scene1:
 
             label1 = LOST_FONT.render(label_1_txt, 1, (255, 255, 255))
 
-            self.window.blit(label1, (WIDTH / 2 - label1.get_width() / 2, 460))
+            self.window.blit(label1, (WIDTH / 2 - label1.get_width() / 2, 415))
 
             pygame.display.update()
             for event in pygame.event.get():

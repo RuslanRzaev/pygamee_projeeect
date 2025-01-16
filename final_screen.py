@@ -37,7 +37,7 @@ def final_screen(lives_left, current_attempt, window):
 
             c = 0
             for i in achievements_objs:
-                i.draw(screen, WIDTH / 2 - i.bg.get_width() / 2, 190 + 110 * c)
+                i.draw(screen, WIDTH / 2 - i.bg.get_width() / 2, 190 + 120 * c)
                 c += 1
 
 

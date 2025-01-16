@@ -150,7 +150,7 @@ achievement_ja_ja = Achievement(1100, 100, ACHIEVEMENT_BG, title2, desc2, ACHIEV
 showed_a = False
 showed_a_ja = False
 len_db_level_1 = con.execute("select count(*) from level1").fetchone()
-current_attempt = len_db_level_1[0]
+current_attempt = 1 if int(len_db_level_1[0]) < 1 else len_db_level_1[0]
 
 def timings(screen, problem_sound, TIME_GAME, fish_group, big_fish_group, font, player):
     global showed_a, showed_a_ja
@@ -174,7 +174,7 @@ def timings(screen, problem_sound, TIME_GAME, fish_group, big_fish_group, font, 
 
     if 80 < TIME_GAME < 120:
         if not showed_a:
-            add_to_db_sqlite(1, current_attempt, title1, desc1, 'KARASIKI',
+            add_to_db_sqlite(1, current_attempt, title1, desc1, 'карасики.png',
                                str(datetime.now())[:-7],
                                1)
             showed_a = True
@@ -196,7 +196,7 @@ def timings(screen, problem_sound, TIME_GAME, fish_group, big_fish_group, font, 
         player.rect.x += 5
         player.rect.y -= 3
         if not showed_a_ja:
-            add_to_db_sqlite(1, current_attempt, title2, desc2, 'ACHIEVEMENT_3_1',
+            add_to_db_sqlite(1, current_attempt, title2, desc2, 'icon_3_1.png',
                                str(datetime.now())[:-7],
                                1)
             showed_a_ja = True
@@ -212,10 +212,13 @@ def shakes(shakes_start_time, shakes_end_time, shakes_intensity, TIME_GAME, scre
     screen.blit(BACKGROUND_IMAGE, (0 + moved_x, 0 + moved_y))
 
 
-def get_achievements(attempt):
+def get_achievements(attempt=None):
     achievements = []
     for i in range(1, 4):
-        cur.execute(f'SELECT * FROM level{i} WHERE attempt = {attempt}')
+        if attempt is not None:
+            cur.execute(f'SELECT * FROM level{i} WHERE attempt = {attempt}')
+        else:
+            cur.execute(f'SELECT * FROM level{i}')
         achievements.extend([achievement + (i,) for achievement in cur.fetchall()])
     return achievements
 

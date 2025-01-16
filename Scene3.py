@@ -110,7 +110,7 @@ class Scene3:
                 else:
                     LOST_SOUND.play()
                 if not showed_ship_a:
-                    utils.add_to_db_sqlite(3, self.current_attempt, title1, desc1, 'ACHIEVEMENT_3_1',
+                    utils.add_to_db_sqlite(3, self.current_attempt, title1, desc1, 'icon_3_1.png',
                                        str(datetime.now())[:-7],
                                        0)
                 self.success = result
@@ -124,13 +124,13 @@ class Scene3:
                     win_bg = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA).convert()
                     if used_lives == 0:
                         if not showed_health_a:
-                            achievement_health.draw_n_move(self.window, 5)
-                            utils.add_to_db_sqlite(3, self.current_attempt, title2, desc2, 'ACHIEVEMENT_3_1',
+                            achievement_health.draw_n_move(self.window, 10)
+                            utils.add_to_db_sqlite(3, self.current_attempt, title2, desc2, 'icon_3_1.png',
                                                    str(datetime.now())[:-7],
                                                    1 if self.success else 0)
                             showed_health_a = True
                         if achievement_health.x <= 1000:
-                            achievement_health.draw_n_move(self.window, 5)
+                            achievement_health.draw_n_move(self.window, 10)
 
 
                     if result:
@@ -141,7 +141,7 @@ class Scene3:
                         alpha += 0.1
                     win_bg.set_alpha(alpha)
                     self.window.blit(win_bg, (0, 0))
-                    self.window.blit(BUTTON_NEXT, (WIDTH / 2 - BUTTON_NEXT.get_width() / 2, 500))
+                    self.window.blit(BUTTON_NEXT, (WIDTH / 2 - BUTTON_NEXT.get_width() / 2, 550))
                     if result:
                         label = LOST_FONT.render(f"You Won!!!", True, (255, 255, 255))
                         self.window.blit(label, (WIDTH / 2 - label.get_width() / 2, 250))
@@ -204,10 +204,10 @@ class Scene3:
             # achievement_ships
             if player.kill_count == enemies_count:
                 if not showed_ship_a:
-                    utils.add_to_db_sqlite(3, self.current_attempt, title1, desc1, 'ACHIEVEMENT_3_1', str(datetime.now())[:-7],
+                    utils.add_to_db_sqlite(3, self.current_attempt, title1, desc1, 'icon_3_1.png', str(datetime.now())[:-7],
                                      1)
                     showed_ship_a = True
-                achievement_ships.draw_n_move(self.window, 5)
+                achievement_ships.draw_n_move(self.window, 10)
 
             if len(asteroids) == 0:
                 for i in range(10):

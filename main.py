@@ -10,8 +10,8 @@ WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Start")
 
 con = sqlite3.connect("db/game.db")
-len_db = con.execute("select count(*) from level3").fetchone()
-attempt = len_db[0]
+len_db = con.execute("SELECT COUNT (*) FROM level1").fetchone()
+attempt = 1 if int(len_db[0]) < 1 else len_db[0]
 
 title_font = pygame.font.SysFont("comicsans", 70)
 run = True
@@ -22,7 +22,7 @@ while run:
         if event.type == pygame.QUIT:
             run = False
         WIN = pygame.display.set_mode((WIDTH, 1000))
-        final_screen(1, 3, WIN)
+        final_screen(1, attempt, WIN)
         WIN = pygame.display.set_mode((WIDTH, HEIGHT))
         start_screen()
         episode_text(TEXT_1)
