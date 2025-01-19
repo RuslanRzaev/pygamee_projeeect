@@ -1,5 +1,3 @@
-import pygame
-
 from config import *
 from utils import load_image
 
