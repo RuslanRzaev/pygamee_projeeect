@@ -1,13 +1,9 @@
-import sqlite3
-from config import *
 from final_achievement import AchievementFinal
 from utils import *
 import pygame
 
 
 def final_screen(lives_left, current_attempt, window):
-        con = sqlite3.connect("db/game.db")
-
         achievements = get_achievements(current_attempt)
         for i in achievements:
             print(i[1], i[2], i[3], i[4], i[5], i[6])

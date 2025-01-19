@@ -1,4 +1,4 @@
-from random import random, randrange
+from random import randrange
 
 from config import *
 

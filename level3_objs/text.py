@@ -1,8 +1,4 @@
-import math
-
-import pygame
 from config import *
-from utils import collide
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 

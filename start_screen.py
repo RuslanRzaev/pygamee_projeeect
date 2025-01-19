@@ -1,7 +1,3 @@
-import sqlite3
-
-import pygame
-import sys
 from utils import load_image, get_achievements, terminate
 from config import *
 

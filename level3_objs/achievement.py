@@ -1,6 +1,3 @@
-from datetime import datetime
-
-from config import *
 from utils import *
 
 
