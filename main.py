@@ -2,7 +2,7 @@ from Scene1 import Scene1
 from Scene3 import *
 from config import *
 from final_screen import final_screen
-from level3_objs.text import episode_text
+from text import episode_text
 from start_screen import start_screen
 
 pygame.font.init()

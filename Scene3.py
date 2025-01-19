@@ -1,13 +1,7 @@
 import math
-import random
-from datetime import datetime
-
 import pygame.display
-
 import utils
-from level3_objs.achievement import Achievement
 from level3_objs.asteroid_ import Asteroid
-from config import *
 from level3_objs.enemy import Enemy
 from level3_objs.player import Player
 from level3_objs.space_station import SpaceStation
