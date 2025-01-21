@@ -114,8 +114,10 @@ class Scene3:
                 self.lives = lives
                 showed_health_a = False
                 alpha = -10
+                count = 0
 
                 while pause:
+                    count += 1
                     win_bg = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA).convert()
                     if used_lives == 0:
                         if not showed_health_a:
@@ -124,15 +126,14 @@ class Scene3:
                                                    str(datetime.now())[:-7],
                                                    1 if self.success else 0)
                             showed_health_a = True
-                        if achievement_health.x <= 1000:
-                            achievement_health.draw_n_move(self.window, 10)
+                        achievement_health.draw_n_move(self.window, 10)
 
 
                     if result:
-                        win_bg.fill((2, 62, 198))
+                        win_bg.fill((2, 62, 205))
                     else:
                         win_bg.fill((52, 14, 16))
-                    if alpha <= 60:
+                    if alpha <= 70:
                         alpha += 0.1
                     win_bg.set_alpha(alpha)
                     self.window.blit(win_bg, (0, 0))

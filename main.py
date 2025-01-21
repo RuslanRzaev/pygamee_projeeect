@@ -21,19 +21,10 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-        WIN = pygame.display.set_mode((WIDTH, 1000))
-        final_screen(1, attempt, WIN)
-        WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-        start_screen()
-        episode_text(TEXT_1)
-        scene1 = Scene1(LIVES, WIN, attempt)
-        scene1.level1_gameplay()
-        if scene1.success:
-            episode_text(PRE_3_1, PRE_3_2, PRE_3_3)
-            scene_3 = Scene3(scene1.lives, WIN, attempt)
-            scene_3.gameplay()
-            if scene_3.success:
-                episode_text(TEXT_1)
+        scene_3 = Scene3(10, WIN, attempt)
+        scene_3.gameplay()
+        if scene_3.success:
+            episode_text(TEXT_1)
         else:
             break
 
