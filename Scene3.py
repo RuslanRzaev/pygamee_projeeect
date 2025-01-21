@@ -3,6 +3,7 @@ import pygame.display
 import utils
 from level3_objs.asteroid_ import Asteroid
 from level3_objs.enemy import Enemy
+from level3_objs.explosion import Explosion
 from level3_objs.player import Player
 from level3_objs.space_station import SpaceStation
 from utils import *
@@ -238,6 +239,8 @@ class Scene3:
                     player.health -= 10
                     player.kill_count += 1
                     ENEMY_BOOM_SOUND.play()
+                    expl = Explosion(enemy.x, enemy.y)
+                    explosion_group.add(expl)
                     enemies.remove(enemy)
 
             for asteroid in asteroids[:]:
@@ -246,6 +249,8 @@ class Scene3:
                 if collide(asteroid, player):
                     player.health -= 10
                     ASTEROID_BOOM_SOUND.play()
+                    expl = Explosion(asteroid.x, asteroid.y)
+                    explosion_group.add(expl)
                     asteroids.remove(asteroid)
 
             player.move_lasers(-laser_vel, enemies)
