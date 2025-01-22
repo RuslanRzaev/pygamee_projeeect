@@ -101,6 +101,8 @@ class Scene2:
             player.draw(self.window)
 
             if final:
+                BUTTON_NEXT.set_colorkey(pygame.Color("black"))
+                BUTTON_NEXT.convert_alpha()
                 BG_MUSIC_BATTLE.stop()
                 if result:
                     VICTORY_SOUND.play()
@@ -156,7 +158,7 @@ class Scene2:
 
                     pygame.display.update()
                     for event in pygame.event.get():
-                        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 2:
                             if result:
                                 VICTORY_SOUND.stop()
                             else:

@@ -18,6 +18,9 @@ def final_screen(lives_left, window, current_attempt):
     VICTORY_SOUND.play(-1)
     run = True
 
+    BUTTON_NEXT.set_colorkey(pygame.Color("black"))
+    BUTTON_NEXT.convert_alpha()
+
     while run:
         window.blit(pygame.transform.scale(VICTORY_BG, (WIDTH, screen.get_height())), (0, 0))
         window.blit(BUTTON_NEXT, (WIDTH / 2 - BUTTON_NEXT.get_width() / 2, screen.get_height() - 110))
@@ -40,7 +43,7 @@ def final_screen(lives_left, window, current_attempt):
 
         pygame.display.update()
         for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 2:
                 VICTORY_SOUND.stop()
                 run = False
 

@@ -122,7 +122,8 @@ class Scene1:
         else:
             label_1_txt = "Возвращаемся на старт экран :("
 
-
+        BUTTON_NEXT.set_colorkey(pygame.Color("black"))
+        BUTTON_NEXT.convert_alpha()
 
         while pause:
             win_bg = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA).convert()
@@ -146,7 +147,7 @@ class Scene1:
 
             pygame.display.update()
             for event in pygame.event.get():
-                if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 2:
                     if self.success:
                         VICTORY_SOUND.stop()
                     else:
@@ -154,9 +155,5 @@ class Scene1:
                     pause = False
 
                 if event.type == pygame.QUIT:
-                    pause = False
-                    if self.success:
-                        VICTORY_SOUND.stop()
-                    else:
-                        LOST_SOUND.stop()
+                    quit()
             pygame.display.flip()

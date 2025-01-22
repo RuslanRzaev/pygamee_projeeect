@@ -11,6 +11,9 @@ def episode_text(text1, text2=None, text3=None):
     run = True
     vel = 0.8
 
+    BUTTON_NEXT.set_colorkey(pygame.Color("black"))
+    BUTTON_NEXT.convert_alpha()
+
     text_height = text1.get_height()
     text1.set_colorkey(pygame.Color("black"))
     text1.convert_alpha()
@@ -49,7 +52,7 @@ def episode_text(text1, text2=None, text3=None):
             if event.type == pygame.QUIT:
                 quit()
 
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 2:
                  TEXT_MUSIC.stop()
                  run = False
 
