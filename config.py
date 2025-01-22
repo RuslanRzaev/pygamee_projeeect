@@ -64,7 +64,7 @@ REGULAR_FONT = pygame.font.SysFont("comicsans", 40)
 LOST_FONT = pygame.font.SysFont("comicsans", 60)
 
 
-TIME_POINT = 60
+TIME_POINT = 6000
 
 PLAYER_LASER_SOUND = pygame.mixer.Sound(os.path.join("data", "sound", "laser_player.mp3"))
 ENEMY_LASER_SOUND = pygame.mixer.Sound(os.path.join("data", "sound", "laser_enemy.mp3"))

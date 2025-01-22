@@ -18,10 +18,10 @@ class Scene1:
         shakes_start_time = 3
         shakes_end_time = 7
         shakes_intensity = 3
-        TIME_GAME = 79
+        TIME_GAME = 0
         font = pygame.font.Font(None, 32)
         frame_now = 0
-        pygame.display.set_caption('Звездные войны. 1 эпизод')
+        pygame.display.set_caption('Звездные войны. I эпизод: Подводные пещеры Набу')
         clock = pygame.time.Clock()
         BACKGROUND_IMAGE = load_image('background.jpg')
         all_sprites = pygame.sprite.Group()
@@ -118,11 +118,9 @@ class Scene1:
 
         pause = True
         if self.success:
-            label_1_txt = "This is where the fun begins..."
-            VICTORY_SOUND.play()
+            label_1_txt = "Вы добрались до столицы!"
         else:
-            label_1_txt = "Returning to the start screen :("
-            LOST_SOUND.play()
+            label_1_txt = "Возвращаемся на старт экран :("
 
 
 
@@ -130,21 +128,18 @@ class Scene1:
             win_bg = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA).convert()
             if self.success:
                 win_bg.fill((2, 62, 138))
+                VICTORY_SOUND.play()
+                label = LOST_FONT.render(f"Вы победили!!!", True, (255, 255, 255))
             else:
                 win_bg.fill((52, 14, 16))
+                LOST_SOUND.play()
+                label = LOST_FONT.render(f"Вы проиграли!!!", True, (255, 255, 255))
+            self.window.blit(label, (WIDTH / 2 - label.get_width() / 2, 250))
             if alpha <= 60:
                 alpha += 0.1
             win_bg.set_alpha(alpha)
             self.window.blit(win_bg, (0, 0))
             self.window.blit(BUTTON_NEXT, (WIDTH / 2 - BUTTON_NEXT.get_width() / 2, 500))
-            if self.success:
-                label = LOST_FONT.render(f"You Won!!!", True, (255, 255, 255))
-                self.window.blit(label, (WIDTH / 2 - label.get_width() / 2, 250))
-
-            else:
-                label = LOST_FONT.render(f"You Lost!!!", True, (255, 255, 255))
-                self.window.blit(label, (WIDTH / 2 - label.get_width() / 2, 250))
-
             label1 = LOST_FONT.render(label_1_txt, 1, (255, 255, 255))
 
             self.window.blit(label1, (WIDTH / 2 - label1.get_width() / 2, 415))

@@ -6,7 +6,7 @@ from datetime import datetime
 from config import *
 import pygame
 
-from level3_objs.achievement import Achievement
+from achievement import Achievement
 
 con = sqlite3.connect("db/game.db")
 cur = con.cursor()
@@ -149,7 +149,7 @@ achievement_ja_ja = Achievement(1100, 100, ACHIEVEMENT_BG, title2, desc2, ACHIEV
 
 showed_a = False
 showed_a_ja = False
-len_db_level_1 = con.execute("select count(*) from level1").fetchone()
+len_db_level_1 = con.execute("SELECT COUNT (*) FROM level1").fetchone()
 current_attempt = 1 if int(len_db_level_1[0]) < 1 else len_db_level_1[0]
 
 def timings(screen, problem_sound, TIME_GAME, fish_group, big_fish_group, font, player):
@@ -191,7 +191,7 @@ def timings(screen, problem_sound, TIME_GAME, fish_group, big_fish_group, font, 
     if TIME_GAME > 165:
         problem_sound.stop()
 
-    if TIME_GAME > 100: # 196
+    if TIME_GAME > 196: # 196
         player.gasoline_level = 0
         player.rect.x += 5
         player.rect.y -= 3
@@ -202,7 +202,7 @@ def timings(screen, problem_sound, TIME_GAME, fish_group, big_fish_group, font, 
             showed_a_ja = True
         achievement_ja_ja.draw_n_move(screen, 10)
 
-    if TIME_GAME > 115: # 199
+    if TIME_GAME > 199: # 199
         pygame.event.post(pygame.event.Event(GAME_STOP))
 
 
@@ -214,7 +214,7 @@ def shakes(shakes_start_time, shakes_end_time, shakes_intensity, TIME_GAME, scre
 
 def get_achievements(attempt=None):
     achievements = []
-    for i in range(1, 4):
+    for i in range(1, 3):
         if attempt is not None:
             cur.execute(f'SELECT * FROM level{i} WHERE attempt = {attempt}')
         else:

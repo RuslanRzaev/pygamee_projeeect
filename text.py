@@ -6,9 +6,10 @@ WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 
 
 def episode_text(text1, text2=None, text3=None):
+    pygame.display.set_caption('События между игровыми сюжетами...')
     TEXT_MUSIC.play(-1)
     run = True
-    vel = 2
+    vel = 0.8
 
     text_height = text1.get_height()
     text1.set_colorkey(pygame.Color("black"))
