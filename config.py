@@ -73,7 +73,9 @@ ASTEROID_BOOM_SOUND = pygame.mixer.Sound(os.path.join("data", "sound", "asteroid
 VICTORY_SOUND = pygame.mixer.Sound(os.path.join("data", "sound", "victory.mp3"))
 LOST_SOUND = pygame.mixer.Sound(os.path.join("data", "sound", "lost.mp3"))
 
-TEXT_1 =  pygame.image.load(os.path.join("data", "img", "text1.png"))
+START_TEXT_1 = pygame.image.load(os.path.join("data", "img", "start_1.png"))
+START_TEXT_2 = pygame.image.load(os.path.join("data", "img", "start_2.png"))
+
 BUTTON_NEXT = pygame.image.load(os.path.join("data", "img", "button_next.png"))
 
 PRE_3_1 = pygame.image.load(os.path.join("data", "img", "pre_3_1.png"))

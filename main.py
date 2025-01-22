@@ -21,11 +21,7 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-        scene_3 = Scene3(10, WIN, attempt)
-        scene_3.gameplay()
-        if scene_3.success:
-            episode_text(TEXT_1)
-        else:
-            break
+
+        episode_text(START_TEXT_1, START_TEXT_2)
 
 pygame.quit()
