@@ -33,9 +33,10 @@ class Scene2:
         time_point = TIME_POINT
         b = False
 
-        enemies = []
-        enemies_vel = 2
         enemies_count = 10
+        enemies =[]
+        enemies_vel = 2
+        timer_enemy = 0
 
         asteroids = []
         asteroid_vel = 2
@@ -71,14 +72,12 @@ class Scene2:
 
         explosion_group = pygame.sprite.Group()
 
-        for i in range(enemies_count):
-            enemy = Enemy(random.randrange(50, WIDTH - 100), random.randrange(-1500, -100),
-                          random.choice(["advanced", "interceptor", "assault"]))
-            enemies.append(enemy)
+
 
         while run:
 
             clock.tick(FPS)
+            timer_enemy += 1
             if lives <= 0:
                 result = False
                 BG_MUSIC_BATTLE.stop()
@@ -91,6 +90,13 @@ class Scene2:
             lives_label = MAIN_FONT.render(f"Жизни: {lives}", 1, (255, 255, 255))
 
             self.window.blit(lives_label, (10, 10))
+
+            if timer_enemy == 200 and enemies_count > 0:
+                enemy = Enemy(random.randrange(50, WIDTH - 100), random.randrange(-1500, -100),
+                              random.choice(["advanced", "interceptor", "assault"]))
+                enemies.append(enemy)
+                timer_enemy = 0
+                enemies_count -= 1
 
             for enemy in enemies:
                 enemy.draw(self.window)
@@ -173,8 +179,7 @@ class Scene2:
             # space station
             if b:
                 space_station.draw(self.window)
-
-            space_station.move(0.7)
+                space_station.move(1)
 
             scroll += 5
 
@@ -194,7 +199,7 @@ class Scene2:
                 run = False
 
             # achievement_ships
-            if player.kill_count == enemies_count:
+            if len(enemies) == 0 and timer_enemy >= 200:
                 if not showed_ship_a:
                     utils.add_to_db_sqlite(2, self.current_attempt, title1, desc1, 'icon_3_1.png',
                                            str(datetime.now())[:-7],
@@ -206,6 +211,7 @@ class Scene2:
                 for i in range(10):
                     asteroid = Asteroid(random.randrange(50, WIDTH - 100), random.randrange(-1500, -100))
                     asteroids.append(asteroid)
+
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -253,7 +259,7 @@ class Scene2:
                     asteroids.remove(asteroid)
 
             player.move_lasers(-laser_vel, enemies)
-            if space_station.y >= -200:
+            if space_station.y >= -270:
                 player.move_lasers(-laser_vel, space_station)
             player.move_lasers(-laser_vel, asteroids)
             explosion_group.draw(self.window)

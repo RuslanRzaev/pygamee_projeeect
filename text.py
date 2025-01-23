@@ -50,8 +50,11 @@ def episode_text(text1, text2=None, text3=None):
         if txt_next_y > HEIGHT // 2:
             txt_next_y -= vel
         WIN.blit(TEXT_NEXT, (WIDTH / 2 - TEXT_NEXT.get_width() / 2, txt_next_y))
+        WIN.blit(BUTTON_NEXT, (WIDTH - 110, 10))
         check_rect = pygame.Rect(WIDTH / 2 - TEXT_NEXT.get_width() / 2, txt_next_y, TEXT_NEXT.get_width(),
                                  TEXT_NEXT.get_height())
+        check_rect_next = pygame.Rect(WIDTH - 110, 10, BUTTON_NEXT.get_width(),
+                                 BUTTON_NEXT.get_height())
         text_y -= vel
 
         for event in pygame.event.get():
@@ -68,5 +71,8 @@ def episode_text(text1, text2=None, text3=None):
                         pygame.mixer.unpause()
                     else:
                         pygame.mixer.pause()
+                if check_rect_next.collidepoint(pygame.mouse.get_pos()):
+                    TEXT_MUSIC.stop()
+                    run = False
 
         pygame.display.flip()

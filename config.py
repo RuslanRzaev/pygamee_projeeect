@@ -63,9 +63,9 @@ MAIN_FONT = pygame.font.SysFont("comicsans", 50)
 REGULAR_FONT = pygame.font.SysFont("comicsans", 40)
 BIG_FONT = pygame.font.SysFont("comicsans", 60)
 
-TEXT_NEXT = BIG_FONT.render(f"Двигаемся далее?...", False, (255, 255, 255))
+TEXT_NEXT = BIG_FONT.render(f"Двигаемся далее...->", False, (255, 255, 255))
 
-TIME_POINT = 3000
+TIME_POINT = 2400
 
 CHANNEL = pygame.mixer.find_channel()
 
