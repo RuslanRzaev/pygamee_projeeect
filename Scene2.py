@@ -134,9 +134,16 @@ class Scene2:
                             achievement_health.draw_n_move(self.window, 10)
                             utils.add_to_db_sqlite(2, self.current_attempt, title2, desc2, 'icon_3_1.png',
                                                    str(datetime.now())[:-7],
-                                                   1 if self.success else 0)
+                                                   1)
                             showed_health_a = True
                         achievement_health.draw_n_move(self.window, 10)
+                    else:
+                        if not showed_health_a:
+                            achievement_health.draw_n_move(self.window, 10)
+                            utils.add_to_db_sqlite(2, self.current_attempt, title2, desc2, 'icon_3_1.png',
+                                                   str(datetime.now())[:-7],
+                                                   0)
+                            showed_health_a = True
 
                     if result:
                         win_bg.fill((0,0,53))
@@ -157,7 +164,9 @@ class Scene2:
 
                     self.window.blit(label2, (WIDTH / 2 - label2.get_width() / 2, 390))
 
-                    self.window.blit(TEXT_NEXT, (WIDTH / 2 - TEXT_NEXT.get_width() / 2, 550))
+                    final_label = BIG_FONT.render(f"Вернуться на стартовый экран...")
+
+                    self.window.blit(final_label, (WIDTH / 2 - final_label.get_width() / 2, 550))
 
                     pygame.display.update()
                     for event in pygame.event.get():

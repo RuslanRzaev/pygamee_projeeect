@@ -132,7 +132,7 @@ class Scene1:
         while pause:
             win_bg = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA).convert()
             if self.success:
-                win_bg.fill((2, 62, 138))
+                win_bg.fill((0,0,53))
                 label = BIG_FONT.render(f"Вы победили!!!", True, (255, 255, 255))
             else:
                 win_bg.fill((52, 14, 16))
