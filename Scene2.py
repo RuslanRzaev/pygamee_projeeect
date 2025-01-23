@@ -101,8 +101,8 @@ class Scene2:
             player.draw(self.window)
 
             if final:
-                BUTTON_NEXT.set_colorkey(pygame.Color("black"))
-                BUTTON_NEXT.convert_alpha()
+                check_rect = pygame.Rect(WIDTH / 2 - TEXT_NEXT.get_width() / 2, 550, TEXT_NEXT.get_width(),
+                                         TEXT_NEXT.get_height())
                 BG_MUSIC_BATTLE.stop()
                 if result:
                     VICTORY_SOUND.play()
@@ -133,38 +133,35 @@ class Scene2:
                         achievement_health.draw_n_move(self.window, 10)
 
                     if result:
-                        win_bg.fill((2, 62, 220))
+                        win_bg.fill((0,0,53))
+                        label = BIG_FONT.render(f"Вы победили!!!", True, (255, 255, 255))
                     else:
                         win_bg.fill((52, 14, 16))
+                        label = BIG_FONT.render(f"Вы проиграли!!!", True, (255, 255, 255))
                     if alpha <= 70:
                         alpha += 0.1
                     win_bg.set_alpha(alpha)
                     self.window.blit(win_bg, (0, 0))
-                    self.window.blit(BUTTON_NEXT, (WIDTH / 2 - BUTTON_NEXT.get_width() / 2, 550))
-                    if result:
-                        label = LOST_FONT.render(f"Вы победили!!!", True, (255, 255, 255))
-                        self.window.blit(label, (WIDTH / 2 - label.get_width() / 2, 250))
+                    self.window.blit(label, (WIDTH / 2 - label.get_width() / 2, 250))
 
-                    else:
-                        label = LOST_FONT.render(f"Вы проиграли!!!", True, (255, 255, 255))
-                        self.window.blit(label, (WIDTH / 2 - label.get_width() / 2, 250))
-
-                    label1 = LOST_FONT.render(f"Уничтоженные враги: {player.kill_count + 1}", 1, (255, 255, 255))
-                    label2 = LOST_FONT.render(f"Использованные жизни: {used_lives}", 1, (255, 255, 255))
+                    label1 = BIG_FONT.render(f"Уничтоженные враги: {player.kill_count + 1}", 1, (255, 255, 255))
+                    label2 = BIG_FONT.render(f"Использованные жизни: {used_lives}", 1, (255, 255, 255))
 
                     self.window.blit(label1, (WIDTH / 2 - label1.get_width() / 2, 320))
 
                     self.window.blit(label2, (WIDTH / 2 - label2.get_width() / 2, 390))
 
+                    self.window.blit(TEXT_NEXT, (WIDTH / 2 - TEXT_NEXT.get_width() / 2, 550))
+
                     pygame.display.update()
                     for event in pygame.event.get():
-                        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 2:
-                            if result:
-                                VICTORY_SOUND.stop()
-                            else:
-                                LOST_SOUND.stop()
-                            pause = False
-
+                        if event.type == pygame.MOUSEBUTTONDOWN:
+                            if check_rect.collidepoint(pygame.mouse.get_pos()):
+                                if result:
+                                    VICTORY_SOUND.stop()
+                                else:
+                                    LOST_SOUND.stop()
+                                pause = False
                         if event.type == pygame.QUIT:
                             pause = False
                             if result:
@@ -256,7 +253,7 @@ class Scene2:
                     asteroids.remove(asteroid)
 
             player.move_lasers(-laser_vel, enemies)
-            if space_station.y >= -400:
+            if space_station.y >= -200:
                 player.move_lasers(-laser_vel, space_station)
             player.move_lasers(-laser_vel, asteroids)
             explosion_group.draw(self.window)

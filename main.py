@@ -21,8 +21,8 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-        start_screen()
-        episode_text(START_TEXT_1, START_TEXT_2)
+        #start_screen()
+        #episode_text(START_TEXT_1, START_TEXT_2)
         scene1 = Scene1(LIVES, WIN, attempt)
         scene1.level1_gameplay()
         if scene1.success:

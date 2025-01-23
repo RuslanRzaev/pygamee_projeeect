@@ -1,3 +1,5 @@
+import pygame.mixer
+
 from level1_sprites import *
 from utils import *
 from config import *
@@ -10,15 +12,14 @@ class Scene1:
         self.success = False
         self.current_attempt = attempt
         self.window = window
-        pygame.mixer.init()
-        pygame.mixer.music.load("data/sound/game_sound.mp3")
         self.problem_sound = pygame.mixer.Sound('data/sound/звуктревоги.mp3')
 
     def level1_gameplay(self):
+        BG_LEVEL1.play()
         shakes_start_time = 3
         shakes_end_time = 7
         shakes_intensity = 3
-        TIME_GAME = 0
+        TIME_GAME = 198
         font = pygame.font.Font(None, 32)
         frame_now = 0
         pygame.display.set_caption('Звездные войны. I эпизод: Подводные пещеры Набу')
@@ -42,9 +43,6 @@ class Scene1:
         BigFish.target_fish = fish
         big_fish = BigFish(0, fish.rect.y, BIG_FISH_WIDTH, BIG_FISH_HEIGHT)
 
-        # sound
-        pygame.mixer.music.play()
-
         # Поверхность для затемнения экрана в начале
         alpha = 255  # максимально темно
         dark_surface = pygame.Surface(self.window.get_size())
@@ -58,7 +56,7 @@ class Scene1:
             shakes(shakes_start_time, shakes_end_time, shakes_intensity, TIME_GAME, self.window, BACKGROUND_IMAGE)
 
             if player.lives < 1:
-                pygame.mixer.music.stop()
+                BG_LEVEL1.stop()
                 running = False
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -67,7 +65,7 @@ class Scene1:
                     shakes_start_time = TIME_GAME
                     shakes_end_time = TIME_GAME + 2
                 elif event.type == GAME_STOP:
-                    pygame.mixer.music.stop()
+                    BG_LEVEL1.stop()
                     running = False
 
             all_sprites.update()
@@ -122,37 +120,44 @@ class Scene1:
         else:
             label_1_txt = "Возвращаемся на старт экран :("
 
-        BUTTON_NEXT.set_colorkey(pygame.Color("black"))
-        BUTTON_NEXT.convert_alpha()
+        BG_LEVEL1.stop()
+
+        check_rect = pygame.Rect(WIDTH / 2 - TEXT_NEXT.get_width() / 2, 500, TEXT_NEXT.get_width(), TEXT_NEXT.get_height())
+
+        if self.success:
+            VICTORY_SOUND.play()
+        else:
+            LOST_SOUND.play()
 
         while pause:
             win_bg = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA).convert()
             if self.success:
                 win_bg.fill((2, 62, 138))
-                VICTORY_SOUND.play()
-                label = LOST_FONT.render(f"Вы победили!!!", True, (255, 255, 255))
+                label = BIG_FONT.render(f"Вы победили!!!", True, (255, 255, 255))
             else:
                 win_bg.fill((52, 14, 16))
-                LOST_SOUND.play()
-                label = LOST_FONT.render(f"Вы проиграли!!!", True, (255, 255, 255))
+                label = BIG_FONT.render(f"Вы проиграли!!!", True, (255, 255, 255))
             self.window.blit(label, (WIDTH / 2 - label.get_width() / 2, 250))
             if alpha <= 60:
                 alpha += 0.1
             win_bg.set_alpha(alpha)
             self.window.blit(win_bg, (0, 0))
-            self.window.blit(BUTTON_NEXT, (WIDTH / 2 - BUTTON_NEXT.get_width() / 2, 500))
-            label1 = LOST_FONT.render(label_1_txt, 1, (255, 255, 255))
 
-            self.window.blit(label1, (WIDTH / 2 - label1.get_width() / 2, 415))
+            self.window.blit(label, (WIDTH / 2 - label.get_width() / 2, 250))
+            self.window.blit(TEXT_NEXT, (WIDTH / 2 - TEXT_NEXT.get_width() / 2, 500))
+            label1 = BIG_FONT.render(label_1_txt, 1, (255, 255, 255))
+
+            self.window.blit(label1, (WIDTH / 2 - label1.get_width() / 2, 330))
 
             pygame.display.update()
             for event in pygame.event.get():
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 2:
-                    if self.success:
-                        VICTORY_SOUND.stop()
-                    else:
-                        LOST_SOUND.stop()
-                    pause = False
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if check_rect.collidepoint(pygame.mouse.get_pos()):
+                        if self.success:
+                            VICTORY_SOUND.stop()
+                        else:
+                            LOST_SOUND.stop()
+                        pause = False
 
                 if event.type == pygame.QUIT:
                     quit()

@@ -61,10 +61,13 @@ KARASIKI = pygame.transform.scale(pygame.image.load(os.path.join("data", "img", 
 
 MAIN_FONT = pygame.font.SysFont("comicsans", 50)
 REGULAR_FONT = pygame.font.SysFont("comicsans", 40)
-LOST_FONT = pygame.font.SysFont("comicsans", 60)
+BIG_FONT = pygame.font.SysFont("comicsans", 60)
 
+TEXT_NEXT = BIG_FONT.render(f"Двигаемся далее?...", False, (255, 255, 255))
 
-TIME_POINT = 6000
+TIME_POINT = 3000
+
+CHANNEL = pygame.mixer.find_channel()
 
 PLAYER_LASER_SOUND = pygame.mixer.Sound(os.path.join("data", "sound", "laser_player.mp3"))
 ENEMY_LASER_SOUND = pygame.mixer.Sound(os.path.join("data", "sound", "laser_enemy.mp3"))
@@ -77,6 +80,8 @@ START_TEXT_1 = pygame.image.load(os.path.join("data", "img", "start_1.png"))
 START_TEXT_2 = pygame.image.load(os.path.join("data", "img", "start_2.png"))
 
 BUTTON_NEXT = pygame.image.load(os.path.join("data", "img", "button_next.png"))
+PAUSE = pygame.image.load(os.path.join("data", "img", "pause.png"))
+RESUME = pygame.image.load(os.path.join("data", "img", "play-button.png"))
 
 PRE_3_1 = pygame.image.load(os.path.join("data", "img", "pre_3_1.png"))
 PRE_3_2 = pygame.image.load(os.path.join("data", "img", "pre_3_2.png"))
@@ -85,4 +90,5 @@ PRE_3_3 = pygame.image.load(os.path.join("data", "img", "pre_3_3.png"))
 ACHIEVEMENT_3_1 = pygame.image.load(os.path.join("data", "img", "icon_3_1.png"))
 
 BG_MUSIC_BATTLE = pygame.mixer.Sound(os.path.join("data", "sound", "bg_music_battle.mp3"))
+BG_LEVEL1 = pygame.mixer.Sound(os.path.join("data", "sound", "game_sound.mp3"))
 TEXT_MUSIC = pygame.mixer.Sound(os.path.join("data", "sound", "text_music.mp3"))
