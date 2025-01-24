@@ -1,5 +1,6 @@
-from utils import load_image, get_achievements, terminate
-from config import *
+import pygame
+import sys
+from utils import load_image, get_achievements, terminate, get_number_of_achievements_per_level, get_count_achievement
 
 pygame.init()
 
@@ -7,7 +8,7 @@ SIZE = WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode(SIZE)
 pygame.display.set_caption("Стартовое окно")
 
-BACKGROUND_IMG = load_image('start_background.png')
+BACKGROUND_IMG = load_image('space_station_800_600.jpg')
 CROSS = pygame.transform.smoothscale(load_image('cross.png'), (30, 30))
 CHECK_MARK = pygame.transform.smoothscale(load_image('check_mark.png'), (30, 30))
 GITHUB_IMAGE = [load_image('github_ruslan.png'), None, load_image('github_jane.png')]
@@ -69,12 +70,17 @@ class Achievement:
         self.date = date
         self.check = check
         self.level = level
+
     def draw(self, screen, x, y):
         screen.blit(pygame.transform.scale(self.image, (50, 50)), (x, y))
         name = font.render(self.name, True, BUTTON_COLOR)
         screen.blit(name, (x + 60, y))
-        if self.check == 1:
+        if self.check:
             screen.blit(CHECK_MARK, (750, y))
+            count_achievement = font.render(
+                f'Количество получений: {get_count_achievement(self.level, self.name)}',
+                True, BUTTON_COLOR)
+            screen.blit(count_achievement, (x + 60, y + 30))
         else:
             screen.blit(CROSS, (750, y))
 
@@ -119,6 +125,13 @@ def draw_achievements(events):
     for event in events:
         if back_button.is_pressed(event):
             back_button.function()
+    if get_number_of_achievements_per_level(1):
+        count_of_achievements_1 = font.render(f'1 LEVEL: {get_number_of_achievements_per_level(1)}', True, BUTTON_COLOR)
+        screen.blit(count_of_achievements_1, (600, 500))
+
+    if get_number_of_achievements_per_level(2):
+        count_of_achievements_2 = font.render(f'2 LEVEL: {get_number_of_achievements_per_level(2)}', True, BUTTON_COLOR)
+        screen.blit(count_of_achievements_2, (600, 530))
 
 
 def draw_achievement_more(events):
@@ -148,6 +161,7 @@ def draw_achievement_more(events):
         if back_button.is_pressed(event):
             back_button.function()
 
+
 def draw_about_the_authors(events):
     back_button = Button(10, 10, 100, 40, "Назад", lambda: set_screen(SCREEN_MAIN_MENU))
     back_button.draw(screen)
@@ -162,7 +176,7 @@ def draw_about_the_authors(events):
     screen.blit(pygame.transform.smoothscale(TG_IMAGE[1], (150, 150)), (600, 250))
 
     author3 = font.render('3 LEVEL', True, BUTTON_COLOR)
-    screen.blit(author2, (30, 450))
+    screen.blit(author3, (30, 450))
     screen.blit(pygame.transform.smoothscale(GITHUB_IMAGE[2], (150, 150)), (250, 420))
     screen.blit(pygame.transform.smoothscale(TG_IMAGE[2], (150, 150)), (600, 420))
 
@@ -189,7 +203,7 @@ def start_screen():
 
         for event in events:
             if event.type == pygame.QUIT:
-                quit()
+                terminate()
             elif event.type == lets_go:
                 running = False
 
@@ -201,5 +215,6 @@ def start_screen():
             draw_achievement_more(events)
         elif current_screen == SCREEN_ABOUT_AUTHOR:
             draw_about_the_authors(events)
+
         pygame.display.update()
         clock.tick(FPS)

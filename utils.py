@@ -222,6 +222,18 @@ def get_achievements(attempt=None):
         achievements.extend([achievement + (i,) for achievement in cur.fetchall()])
     return achievements
 
+def get_number_of_achievements_per_level(level: int) -> int:
+    try:
+        count = cur.execute(f'SELECT count(*) FROM level{level}').fetchall()
+        if count:
+            return int(count[0][0])
+    except sqlite3.OperationalError:
+        pass
+
+def get_count_achievement(level, name_achievement: str) -> int:
+    count = cur.execute(f'SELECT count(*) FROM level{level} WHERE title == "{name_achievement}"').fetchall()
+    return int(count[0][0])
+
 
 PLAYER_HIT = pygame.event.custom_type()
 GAME_STOP = pygame.event.custom_type()

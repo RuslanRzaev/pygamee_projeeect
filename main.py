@@ -6,7 +6,7 @@ from text import episode_text
 from start_screen import start_screen
 
 pygame.font.init()
-WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+WIN = pygame.display.set_mode((WIDTH - 200, HEIGHT - 150))
 pygame.display.set_caption("Старт")
 
 con = sqlite3.connect("db/game.db")
@@ -22,6 +22,7 @@ while run:
         if event.type == pygame.QUIT:
             run = False
         start_screen()
+        pygame.display.set_mode((WIDTH, HEIGHT))
         episode_text(START_TEXT_1, START_TEXT_2)
         scene1 = Scene1(LIVES, WIN, attempt)
         scene1.level1_gameplay()
