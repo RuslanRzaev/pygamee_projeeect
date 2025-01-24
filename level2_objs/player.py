@@ -1,7 +1,7 @@
 from config import *
-from level3_objs.enemy import Enemy
-from level3_objs.explosion import Explosion
-from level3_objs.ship import Ship
+from level2_objs.enemy import Enemy
+from level2_objs.explosion import Explosion
+from level2_objs.ship import Ship
 
 
 class Player(Ship):

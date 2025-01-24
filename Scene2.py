@@ -3,11 +3,11 @@ import math
 import pygame.display
 
 import utils
-from level3_objs.asteroid_ import Asteroid
-from level3_objs.enemy import Enemy
-from level3_objs.explosion import Explosion
-from level3_objs.player import Player
-from level3_objs.space_station import SpaceStation
+from level2_objs.asteroid_ import Asteroid
+from level2_objs.enemy import Enemy
+from level2_objs.explosion import Explosion
+from level2_objs.player import Player
+from level2_objs.space_station import SpaceStation
 from utils import *
 
 pygame.font.init()
