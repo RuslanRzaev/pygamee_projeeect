@@ -1,5 +1,6 @@
 import os
 import random
+import sqlite3
 import sqlite3 as sq
 import sys
 from config import *
@@ -148,12 +149,37 @@ def shakes(shakes_start_time, shakes_end_time, shakes_intensity, TIME_GAME, scre
 
 def get_achievements():
     achievements = []
-    conn = sq.connect('test.db')
+    conn = sq.connect('game.db')
     cursor = conn.cursor()
-    for i in range(1, 2):
+    for i in range(1, 3):
         cursor.execute(f'SELECT * FROM level{i}')
         achievements.extend([achievement + (i,) for achievement in cursor.fetchall()])
-    return achievements
+    seen_titles = set()
+    unique_data = []
+
+    for record in achievements:
+        title = record[1]  # Второй элемент — название
+        if title not in seen_titles:
+            seen_titles.add(title)
+            unique_data.append(record)
+
+    return unique_data
+
+def get_number_of_achievements_per_level(level: int) -> int:
+    conn = sq.connect('game.db')
+    cursor = conn.cursor()
+    try:
+        count = cursor.execute(f'SELECT count(*) FROM level{level}').fetchall()
+        if count:
+            return int(count[0][0])
+    except sqlite3.OperationalError:
+        pass
+
+def get_count_achievement(level, name_achievement: str) -> int:
+    conn = sq.connect('game.db')
+    cursor = conn.cursor()
+    count = cursor.execute(f'SELECT count(*) FROM level{level} WHERE title == "{name_achievement}"').fetchall()
+    return int(count[0][0])
 
 PLAYER_HIT = pygame.event.custom_type()
 GAME_STOP = pygame.event.custom_type()

@@ -38,8 +38,7 @@ def level1():
     BigFish.target_fish = fish
     big_fish = BigFish(0, fish.rect.y, BIG_FISH_WIDTH, BIG_FISH_HEIGHT)
 
-    # sound
-    pygame.mixer.music.play()
+
 
     # Поверхность для затемнения экрана в начале
     alpha = 255  # максимально темно
@@ -48,6 +47,8 @@ def level1():
 
     running = True
     start_screen()
+    # sound
+    pygame.mixer.music.play()
     while running:
         frame_now += 1
         # тряска
