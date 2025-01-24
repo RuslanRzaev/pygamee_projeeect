@@ -18,12 +18,14 @@ def final_screen(lives_left, window, current_attempt):
     VICTORY_SOUND.play(-1)
     run = True
 
-    check_rect = pygame.Rect(WIDTH / 2 - TEXT_NEXT.get_width() / 2, screen.get_height() - 110, TEXT_NEXT.get_width(),
-                             TEXT_NEXT.get_height())
+    final_label = BIG_FONT.render("Вернуться на стартовый экран ->", 1, (255, 255, 255))
+
+    check_rect = pygame.Rect(WIDTH / 2 - final_label.get_width() / 2, HEIGHT - 110, final_label.get_width(),
+                             final_label.get_height())
 
     while run:
         window.blit(pygame.transform.scale(VICTORY_BG, (WIDTH, screen.get_height())), (0, 0))
-        window.blit(TEXT_NEXT, (WIDTH / 2 - TEXT_NEXT.get_width() / 2, screen.get_height() - 110))
+        window.blit(final_label, (WIDTH / 2 - final_label.get_width() / 2, screen.get_height() - 110))
         label = MAIN_FONT.render(f"Вы спасли республику!!!", True, (255, 255, 255))
         window.blit(label, (WIDTH / 2 - label.get_width() / 2, 10))
 

@@ -34,6 +34,7 @@ class Scene2:
         b = False
 
         enemies_count = 10
+        enemies_cnt_nc = 10
         enemies =[]
         enemies_vel = 2
         timer_enemy = 0
@@ -87,9 +88,11 @@ class Scene2:
                 self.window.blit(bg, (0, i * bg_height + scroll - bg_height))
 
             # draw text
-            lives_label = MAIN_FONT.render(f"Жизни: {lives}", 1, (255, 255, 255))
+            lives_label = REGULAR_FONT.render(f"Жизни: {lives}", 1, (255, 255, 255))
+            kill_count_label = REGULAR_FONT.render(f"Счёт врагов: {player.kill_count}/{enemies_cnt_nc}", 1, (255, 255, 255))
 
             self.window.blit(lives_label, (10, 10))
+            self.window.blit(kill_count_label, (10, 50))
 
             if timer_enemy == 200 and enemies_count > 0:
                 enemy = Enemy(random.randrange(50, WIDTH - 100), random.randrange(-1500, -100),
@@ -131,15 +134,15 @@ class Scene2:
                     win_bg = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA).convert()
                     if used_lives == 0:
                         if not showed_health_a:
-                            achievement_health.draw_n_move(self.window, 10)
+                            achievement_health.draw_n_move(self.window, 15)
                             utils.add_to_db_sqlite(2, self.current_attempt, title2, desc2, 'icon_3_1.png',
                                                    str(datetime.now())[:-7],
                                                    1)
                             showed_health_a = True
-                        achievement_health.draw_n_move(self.window, 10)
+                        achievement_health.draw_n_move(self.window, 15)
                     else:
                         if not showed_health_a:
-                            achievement_health.draw_n_move(self.window, 10)
+                            achievement_health.draw_n_move(self.window, 15)
                             utils.add_to_db_sqlite(2, self.current_attempt, title2, desc2, 'icon_3_1.png',
                                                    str(datetime.now())[:-7],
                                                    0)
@@ -164,9 +167,7 @@ class Scene2:
 
                     self.window.blit(label2, (WIDTH / 2 - label2.get_width() / 2, 390))
 
-                    final_label = BIG_FONT.render(f"Вернуться на стартовый экран...")
-
-                    self.window.blit(final_label, (WIDTH / 2 - final_label.get_width() / 2, 550))
+                    self.window.blit(TEXT_NEXT, (WIDTH / 2 - TEXT_NEXT.get_width() / 2, 550))
 
                     pygame.display.update()
                     for event in pygame.event.get():
@@ -214,7 +215,7 @@ class Scene2:
                                            str(datetime.now())[:-7],
                                            1)
                     showed_ship_a = True
-                achievement_ships.draw_n_move(self.window, 10)
+                achievement_ships.draw_n_move(self.window, 15)
 
             if len(asteroids) == 0:
                 for i in range(10):
@@ -261,7 +262,7 @@ class Scene2:
                 asteroid.move(asteroid_vel)
 
                 if collide(asteroid, player):
-                    player.health -= 10
+                    player.health -= 5
                     ASTEROID_BOOM_SOUND.play()
                     expl = Explosion(asteroid.x, asteroid.y)
                     explosion_group.add(expl)

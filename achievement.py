@@ -13,7 +13,7 @@ class Achievement:
         self.time_count = 0
 
     def draw_n_move(self, window, vel):
-        if self.time_count >= 360:
+        if self.time_count >= 300:
             if self.x < 1000:
                 self.x += vel * 2
         else:

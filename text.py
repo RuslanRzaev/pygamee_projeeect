@@ -40,7 +40,7 @@ def episode_text(text1, text2=None, text3=None):
             vel = 0
         else:
             WIN.blit(PAUSE, (20, 20))
-            vel = 0.45
+            vel = 0.6
 
         WIN.blit(text1, (text_x, text_y - vel))
         if text2 is not None:

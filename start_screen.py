@@ -189,7 +189,7 @@ def start_screen():
 
         for event in events:
             if event.type == pygame.QUIT:
-                running = False
+                quit()
             elif event.type == lets_go:
                 running = False
 
