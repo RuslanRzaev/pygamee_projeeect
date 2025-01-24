@@ -1,5 +1,4 @@
 import pygame
-import sys
 from utils import load_image, get_achievements, terminate, get_number_of_achievements_per_level, get_count_achievement
 
 pygame.init()
