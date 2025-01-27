@@ -20,12 +20,12 @@ class Scene1:
         shakes_start_time = 3
         shakes_end_time = 7
         shakes_intensity = 3
-        TIME_GAME = 198
+        TIME_GAME = 0
         font = pygame.font.Font(None, 32)
         frame_now = 0
         pygame.display.set_caption('Звездные войны. I эпизод: Подводные пещеры Набу')
         clock = pygame.time.Clock()
-        BACKGROUND_IMAGE = load_image('background.jpg')
+        BACKGROUND_IMAGE = pygame.transform.scale(load_image('background.jpg'), (WIDTH, HEIGHT))
         all_sprites = pygame.sprite.Group()
         player_group = pygame.sprite.Group()
         obstacles_group = pygame.sprite.Group()
