@@ -48,7 +48,7 @@ YELLOW_LASER = pygame.image.load(os.path.join("data", "img", "pixel_laser_yellow
 ASTEROID_R1 = pygame.image.load(os.path.join("data", "img", "asteroid.png"))
 ASTEROID_R2 = pygame.image.load(os.path.join("data", "img", "asteroid1.png"))
 ASTEROID_R3 = pygame.image.load(os.path.join("data", "img", "asteroid2.png"))
-ASTEROID_R4 = pygame.image.load(os.path.join("data", "img","asteroid3.png"))
+ASTEROID_R4 = pygame.image.load(os.path.join("data", "img", "asteroid3.png"))
 
 BG = pygame.transform.scale(pygame.image.load(os.path.join("data", "img", "background-black.png")), (WIDTH, HEIGHT))
 

@@ -56,5 +56,6 @@ class Ship(pygame.sprite.Sprite):
         return self.img.get_height()
 
     def healthbar(self, window):
-        pygame.draw.rect(window, (255,0,0), (self.x, self.y + self.img.get_height() + 10, self.img.get_width(), 10))
-        pygame.draw.rect(window, (0,255,0), (self.x, self.y + self.img.get_height() + 10, self.img.get_width() * (self.health / self.max_health), 10))
+        pygame.draw.rect(window, (255, 0, 0), (self.x, self.y + self.img.get_height() + 10, self.img.get_width(), 10))
+        pygame.draw.rect(window, (0, 255, 0), (
+        self.x, self.y + self.img.get_height() + 10, self.img.get_width() * (self.health / self.max_health), 10))

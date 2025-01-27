@@ -5,10 +5,10 @@ from level2_objs.ship import Ship
 
 class Enemy(Ship):
     COLOR_MAP = {
-                "advanced": (TIE_ADVANCED, RED_LASER),
-                "assault": (TIE_ASSAULT, GREEN_LASER),
-                "interceptor": (TIE_INTERCEPTOR, BLUE_LASER)
-                }
+        "advanced": (TIE_ADVANCED, RED_LASER),
+        "assault": (TIE_ASSAULT, GREEN_LASER),
+        "interceptor": (TIE_INTERCEPTOR, BLUE_LASER)
+    }
 
     def __init__(self, x, y, color, health=50):
         super().__init__(x, y, health)
@@ -34,5 +34,8 @@ class Enemy(Ship):
             self.cool_down_counter = 1
 
     def healthbar(self, window):
-        pygame.draw.rect(window, (255,0,0), (self.x, self.y - self.img.get_height() + self.offset, self.img.get_width(), 10))
-        pygame.draw.rect(window, (0,255,0), (self.x, self.y - self.img.get_height() + self.offset, self.img.get_width() * (self.health / self.max_health), 10))
+        pygame.draw.rect(window, (255, 0, 0),
+                         (self.x, self.y - self.img.get_height() + self.offset, self.img.get_width(), 10))
+        pygame.draw.rect(window, (0, 255, 0), (
+        self.x, self.y - self.img.get_height() + self.offset, self.img.get_width() * (self.health / self.max_health),
+        10))

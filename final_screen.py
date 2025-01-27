@@ -29,7 +29,6 @@ def final_screen(lives_left, window, current_attempt):
         label = MAIN_FONT.render(f"Вы спасли республику!!!", True, (255, 255, 255))
         window.blit(label, (WIDTH / 2 - label.get_width() / 2, 10))
 
-
         label_lives = REGULAR_FONT.render(f"Оставшиеся жизни: {lives_left}", 1, (255, 255, 255))
         label_attempt = REGULAR_FONT.render(f"Текущая попытка: {current_attempt}", 1, (255, 255, 255))
 
@@ -41,7 +40,6 @@ def final_screen(lives_left, window, current_attempt):
         for i in achievements_objs:
             i.draw(screen, WIDTH / 2 - i.bg.get_width() / 2, 190 + 120 * c)
             c += 1
-
 
         pygame.display.update()
         for event in pygame.event.get():

@@ -1,5 +1,5 @@
 import pygame
-import sys
+
 from utils import load_image, get_achievements, terminate, get_number_of_achievements_per_level, get_count_achievement
 
 pygame.init()
@@ -166,19 +166,19 @@ def draw_about_the_authors(events):
     back_button = Button(10, 10, 100, 40, "Назад", lambda: set_screen(SCREEN_MAIN_MENU))
     back_button.draw(screen)
 
-    author1 = font.render('1 LEVEL', True, BUTTON_COLOR)
+    author1 = font.render('LEVEL 1', True, BUTTON_COLOR)
     screen.blit(author1, (30, 150))
     screen.blit(pygame.transform.smoothscale(GITHUB_IMAGE[0], (150, 150)), (250, 50))
     screen.blit(pygame.transform.smoothscale(TG_IMAGE[0], (150, 150)), (600, 50))
-    author2 = font.render('2 LEVEL', True, BUTTON_COLOR)
-    screen.blit(author2, (30, 300))
-    # screen.blit(pygame.transform.smoothscale(GITHUB_IMAGE[0], (150, 150)), (250, 150))
-    screen.blit(pygame.transform.smoothscale(TG_IMAGE[1], (150, 150)), (600, 250))
+    # author2 = font.render('2 LEVEL', True, BUTTON_COLOR)
+    # screen.blit(author2, (30, 300))
+    # # screen.blit(pygame.transform.smoothscale(GITHUB_IMAGE[0], (150, 150)), (250, 150))
+    # screen.blit(pygame.transform.smoothscale(TG_IMAGE[1], (150, 150)), (600, 250))
 
-    author3 = font.render('3 LEVEL', True, BUTTON_COLOR)
-    screen.blit(author3, (30, 450))
-    screen.blit(pygame.transform.smoothscale(GITHUB_IMAGE[2], (150, 150)), (250, 420))
-    screen.blit(pygame.transform.smoothscale(TG_IMAGE[2], (150, 150)), (600, 420))
+    author3 = font.render('LEVEL 2', True, BUTTON_COLOR)
+    screen.blit(author3, (30, 300))
+    screen.blit(pygame.transform.smoothscale(GITHUB_IMAGE[2], (150, 150)), (250, 250))
+    screen.blit(pygame.transform.smoothscale(TG_IMAGE[2], (150, 150)), (600, 250))
 
     for event in events:
         if back_button.is_pressed(event):

@@ -6,6 +6,7 @@ from config import *
 
 pygame.init()
 
+
 class Scene1:
     def __init__(self, lives, window, attempt):
         self.lives = lives
@@ -122,7 +123,8 @@ class Scene1:
 
         BG_LEVEL1.stop()
 
-        check_rect = pygame.Rect(WIDTH / 2 - TEXT_NEXT.get_width() / 2, 500, TEXT_NEXT.get_width(), TEXT_NEXT.get_height())
+        check_rect = pygame.Rect(WIDTH / 2 - TEXT_NEXT.get_width() / 2, 500, TEXT_NEXT.get_width(),
+                                 TEXT_NEXT.get_height())
 
         if self.success:
             VICTORY_SOUND.play()
@@ -132,7 +134,7 @@ class Scene1:
         while pause:
             win_bg = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA).convert()
             if self.success:
-                win_bg.fill((0,0,53))
+                win_bg.fill((0, 0, 53))
                 label = BIG_FONT.render(f"Вы победили!!!", True, (255, 255, 255))
             else:
                 win_bg.fill((52, 14, 16))

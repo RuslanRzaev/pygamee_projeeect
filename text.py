@@ -46,7 +46,7 @@ def episode_text(text1, text2=None, text3=None):
         if text2 is not None:
             WIN.blit(text2, (text_x, (text_y + text_height + 10) - vel))
             if text3 is not None:
-                WIN.blit(text3, (text_x, (text_y + text_height +  text2.get_height() + 10) - vel))
+                WIN.blit(text3, (text_x, (text_y + text_height + text2.get_height() + 10) - vel))
         if txt_next_y > HEIGHT // 2:
             txt_next_y -= vel
         WIN.blit(TEXT_NEXT, (WIDTH / 2 - TEXT_NEXT.get_width() / 2, txt_next_y))
@@ -54,7 +54,7 @@ def episode_text(text1, text2=None, text3=None):
         check_rect = pygame.Rect(WIDTH / 2 - TEXT_NEXT.get_width() / 2, txt_next_y, TEXT_NEXT.get_width(),
                                  TEXT_NEXT.get_height())
         check_rect_next = pygame.Rect(WIDTH - 110, 10, BUTTON_NEXT.get_width(),
-                                 BUTTON_NEXT.get_height())
+                                      BUTTON_NEXT.get_height())
         text_y -= vel
 
         for event in pygame.event.get():

@@ -22,7 +22,6 @@ class SpaceStation:
         else:
             self.healthbar(window)
 
-
     def move(self, vel):
         if self.y <= -250:
             self.y += vel
@@ -38,5 +37,7 @@ class SpaceStation:
             coor = (0, 0, 0, 0)
         else:
             coor = (self.x, self.y + self.img.get_height() + 10, self.img.get_width(), 10)
-        self.rect_red = pygame.draw.rect(window, (255,0,0), coor)
-        self.rect_green = pygame.draw.rect(window, (0,255,0), (self.x, self.y + self.img.get_height() + 10, (self.x + 0.5 * self.img.get_width()) * (self.health/self.max_health), 10))
+        self.rect_red = pygame.draw.rect(window, (255, 0, 0), coor)
+        self.rect_green = pygame.draw.rect(window, (0, 255, 0), (self.x, self.y + self.img.get_height() + 10,
+                                                                 (self.x + 0.5 * self.img.get_width()) * (
+                                                                             self.health / self.max_health), 10))

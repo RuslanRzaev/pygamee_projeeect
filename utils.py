@@ -12,16 +12,19 @@ con = sqlite3.connect("db/game.db")
 cur = con.cursor()
 screen = pygame.display.set_mode(SIZE)
 
+
 def collide(obj1, obj2):
     offset_x = obj2.x - obj1.x
     offset_y = obj2.y - obj1.y
     return obj1.mask.overlap(obj2.mask, (offset_x, offset_y)) is not None
+
 
 def text_bg(label, col=(45, 131, 182)):
     text_bg = pygame.Surface(label.get_size())
     text_bg.fill(col)
 
     return text_bg
+
 
 def add_to_db_sqlite(level, attempt, title, desc, img, date, achieved=0):
     con.execute(f"""INSERT INTO level{str(level)} (attempt, title, description, image, date, achieved)
@@ -40,6 +43,7 @@ def delete_duplicates_sqlite(level):
                     image,
                     achieved);""")
     con.commit()
+
 
 def load_image(
         name: str,
@@ -137,6 +141,7 @@ def show_devices(screen, player, font):
     time = font.render(f'Глубина: {int(player.rect.y)}', True, pygame.Color('black'))
     screen.blit(time, (WIDTH - 200, 60))
 
+
 title1 = 'Рыбы дуреют с этой прикормки'
 desc1 = 'Успешно сбежать от хищных рыб'
 
@@ -151,6 +156,7 @@ showed_a = False
 showed_a_ja = False
 len_db_level_1 = con.execute("SELECT COUNT (*) FROM level1").fetchone()
 current_attempt = 1 if int(len_db_level_1[0]) < 1 else len_db_level_1[0]
+
 
 def timings(screen, problem_sound, TIME_GAME, fish_group, big_fish_group, font, player):
     global showed_a, showed_a_ja
@@ -171,15 +177,13 @@ def timings(screen, problem_sound, TIME_GAME, fish_group, big_fish_group, font, 
         big_fish_group.update()
         problem_sound.stop()
 
-
     if 80 < TIME_GAME < 120:
         if not showed_a:
             add_to_db_sqlite(1, current_attempt, title1, desc1, 'карасики.png',
-                               str(datetime.now())[:-7],
-                               1)
+                             str(datetime.now())[:-7],
+                             1)
             showed_a = True
         achievement_fish.draw_n_move(screen, 10)
-
 
     if 140 < TIME_GAME < 165:
         font = pygame.font.Font(None, 32)
@@ -191,18 +195,18 @@ def timings(screen, problem_sound, TIME_GAME, fish_group, big_fish_group, font, 
     if TIME_GAME > 165:
         problem_sound.stop()
 
-    if TIME_GAME > 196: # 196
+    if TIME_GAME > 196:  # 196
         player.gasoline_level = 0
         player.rect.x += 5
         player.rect.y -= 3
         if not showed_a_ja:
             add_to_db_sqlite(1, current_attempt, title2, desc2, 'icon_3_1.png',
-                               str(datetime.now())[:-7],
-                               1)
+                             str(datetime.now())[:-7],
+                             1)
             showed_a_ja = True
         achievement_ja_ja.draw_n_move(screen, 10)
 
-    if TIME_GAME > 199: # 199
+    if TIME_GAME > 199:  # 199
         pygame.event.post(pygame.event.Event(GAME_STOP))
 
 
@@ -222,6 +226,7 @@ def get_achievements(attempt=None):
         achievements.extend([achievement + (i,) for achievement in cur.fetchall()])
     return achievements
 
+
 def get_number_of_achievements_per_level(level: int) -> int:
     try:
         count = cur.execute(f'SELECT count(*) FROM level{level}').fetchall()
@@ -229,6 +234,7 @@ def get_number_of_achievements_per_level(level: int) -> int:
             return int(count[0][0])
     except sqlite3.OperationalError:
         pass
+
 
 def get_count_achievement(level, name_achievement: str) -> int:
     count = cur.execute(f'SELECT count(*) FROM level{level} WHERE title == "{name_achievement}"').fetchall()

@@ -23,7 +23,8 @@ class Achievement:
         if self.x < 1000:
             window.blit(self.img_bg, (self.x, self.y))
             window.blit(self.icon, (self.x, self.y))
-            title = pygame.font.SysFont("comicsans", 25 if len(self.title) > 18 else 35).render(f"{self.title}", True, (255, 255, 255))
+            title = pygame.font.SysFont("comicsans", 25 if len(self.title) > 18 else 35).render(f"{self.title}", True,
+                                                                                                (255, 255, 255))
             window.blit(title, (self.x + self.icon.get_width(), self.y))
             f_size = 20
             description = pygame.font.SysFont("comicsans", f_size).render(f"{self.desc}", True, (255, 255, 255))

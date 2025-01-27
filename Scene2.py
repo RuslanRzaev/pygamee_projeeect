@@ -35,7 +35,7 @@ class Scene2:
 
         enemies_count = 10
         enemies_cnt_nc = 10
-        enemies =[]
+        enemies = []
         enemies_vel = 2
         timer_enemy = 0
 
@@ -73,8 +73,6 @@ class Scene2:
 
         explosion_group = pygame.sprite.Group()
 
-
-
         while run:
 
             clock.tick(FPS)
@@ -89,7 +87,8 @@ class Scene2:
 
             # draw text
             lives_label = REGULAR_FONT.render(f"Жизни: {lives}", 1, (255, 255, 255))
-            kill_count_label = REGULAR_FONT.render(f"Счёт врагов: {player.kill_count}/{enemies_cnt_nc}", 1, (255, 255, 255))
+            kill_count_label = REGULAR_FONT.render(f"Счёт врагов: {player.kill_count}/{enemies_cnt_nc}", 1,
+                                                   (255, 255, 255))
 
             self.window.blit(lives_label, (10, 10))
             self.window.blit(kill_count_label, (10, 50))
@@ -149,7 +148,7 @@ class Scene2:
                             showed_health_a = True
 
                     if result:
-                        win_bg.fill((0,0,53))
+                        win_bg.fill((0, 0, 53))
                         label = BIG_FONT.render(f"Вы победили!!!", True, (255, 255, 255))
                     else:
                         win_bg.fill((52, 14, 16))
@@ -221,7 +220,6 @@ class Scene2:
                 for i in range(10):
                     asteroid = Asteroid(random.randrange(50, WIDTH - 100), random.randrange(-1500, -100))
                     asteroids.append(asteroid)
-
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

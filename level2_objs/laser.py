@@ -1,4 +1,5 @@
 import pygame
+
 from utils import collide
 
 
@@ -17,7 +18,7 @@ class Laser(pygame.sprite.Sprite):
         self.y += vel
 
     def off_screen(self, height):
-        return not(self.y <= height and self.y >= 0)
+        return not (self.y <= height and self.y >= 0)
 
     def collision(self, obj):
         return collide(self, obj)
