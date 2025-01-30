@@ -20,12 +20,12 @@ class Scene1:
         shakes_start_time = 3
         shakes_end_time = 7
         shakes_intensity = 3
-        TIME_GAME = 198
+        TIME_GAME = 140
         font = pygame.font.Font(None, 32)
         frame_now = 0
         pygame.display.set_caption('Звездные войны. I эпизод: Подводные пещеры Набу')
         clock = pygame.time.Clock()
-        BACKGROUND_IMAGE = load_image('background.jpg')
+        BACKGROUND_IMAGE = pygame.transform.smoothscale(load_image('background.jpg'), (SIZE))
         all_sprites = pygame.sprite.Group()
         player_group = pygame.sprite.Group()
         obstacles_group = pygame.sprite.Group()
@@ -109,7 +109,7 @@ class Scene1:
         if self.lives > 0:
             self.success = True
         else:
-            add_to_db_sqlite(1, current_attempt, 'Крутой Джа-Джа', 'Не умереть на первом уровне', 'карасики.png',
+            add_to_db_sqlite(1, current_attempt, 'Крутой Джа-Джа', 'Не умереть на первом уровне', 'ja.png',
                              str(datetime.now())[:-7],
                              0)
         delete_duplicates_sqlite(1)
@@ -120,6 +120,7 @@ class Scene1:
             label_1_txt = "Вы добрались до столицы!"
         else:
             label_1_txt = "Возвращаемся на старт экран :("
+
 
         BG_LEVEL1.stop()
 
@@ -163,4 +164,8 @@ class Scene1:
 
                 if event.type == pygame.QUIT:
                     quit()
+            pygame.display.flip()
+        else:
+            self.problem_sound.stop()
+            pygame.display.set_mode((800, 600))
             pygame.display.flip()

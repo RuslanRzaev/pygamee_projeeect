@@ -10,8 +10,10 @@ WIN = pygame.display.set_mode((WIDTH - 200, HEIGHT - 150))
 pygame.display.set_caption("Старт")
 
 con = sqlite3.connect("db/game.db")
-len_db = con.execute("SELECT COUNT (*) FROM level1").fetchone()
-attempt = 1 if int(len_db[0]) < 1 else len_db[0]
+
+
+len_db_level_1 = con.execute("SELECT max(attempt) FROM level1").fetchone()
+attempt = len_db_level_1[0] + 1
 
 title_font = pygame.font.SysFont("comicsans", 70)
 run = True
