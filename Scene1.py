@@ -20,7 +20,7 @@ class Scene1:
         shakes_start_time = 3
         shakes_end_time = 7
         shakes_intensity = 3
-        TIME_GAME = 140
+        TIME_GAME = 0
         font = pygame.font.Font(None, 32)
         frame_now = 0
         pygame.display.set_caption('Звездные войны. I эпизод: Подводные пещеры Набу')
@@ -166,6 +166,7 @@ class Scene1:
                     quit()
             pygame.display.flip()
         else:
+            if self.lives == 0:
+                pygame.display.set_mode((800, 600))
             self.problem_sound.stop()
-            pygame.display.set_mode((800, 600))
             pygame.display.flip()
