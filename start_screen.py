@@ -7,7 +7,7 @@ SIZE = WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode(SIZE)
 pygame.display.set_caption("Стартовое окно")
 
-BACKGROUND_IMG = load_image('start_background.png')
+BACKGROUND_IMG = load_image('background.png')
 CROSS = pygame.transform.smoothscale(load_image('cross.png'), (30, 30))
 CHECK_MARK = pygame.transform.smoothscale(load_image('check_mark.png'), (30, 30))
 GITHUB_IMAGE = [load_image('github_ruslan.png'), None, load_image('github_jane.png')]
