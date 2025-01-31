@@ -168,8 +168,6 @@ def draw_achievement_more(events):
     back_button.draw(screen)
 
     screen.blit(pygame.transform.scale(selected_achievement.image, (200, 200)), (300, 100))
-    attempt = font.render(f'Попытка: {selected_achievement.attempt}', True, BUTTON_COLOR)
-    screen.blit(attempt, (WIDTH // 2 - attempt.get_width() + 50, 300))
     name = font.render(f'Название: {selected_achievement.name}', True, BUTTON_COLOR)
     description = font.render(f'Описание: {selected_achievement.description}', True, BUTTON_COLOR)
     level = font.render(f'Уровень: {selected_achievement.level}', True, BUTTON_COLOR)

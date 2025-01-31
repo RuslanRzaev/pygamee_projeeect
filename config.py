@@ -7,7 +7,7 @@ pygame.init()
 SIZE = WIDTH, HEIGHT = 1000, 750
 FPS = 60
 
-LIVES = 1
+LIVES = 15
 
 BACKGROUND = pygame.Color('black')  # изначальный цвет окна(пока всё прогрузится
 PLAYER_WIDTH = 100  # ширина игрока
