@@ -8,9 +8,7 @@ from start_screen import start_screen
 pygame.font.init()
 WIN = pygame.display.set_mode((WIDTH - 200, HEIGHT - 150))
 pygame.display.set_caption("Старт")
-
 con = sqlite3.connect("db/game.db")
-
 
 len_db_level_1 = con.execute("SELECT max(attempt) FROM level1").fetchone()
 attempt = len_db_level_1[0] + 1
@@ -23,6 +21,7 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
+        pygame.display.set_mode((800, 600))
         start_screen()
         pygame.display.set_mode((WIDTH, HEIGHT))
         episode_text(START_TEXT_1, START_TEXT_2)

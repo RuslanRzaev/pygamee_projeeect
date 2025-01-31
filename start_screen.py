@@ -1,7 +1,7 @@
 import pygame
 
-from pygamee_projeeect.utils import max_attempt
-from utils import load_image, get_achievements, terminate, get_number_of_achievements_per_level, get_count_achievement
+from utils import load_image, get_achievements, terminate, get_number_of_achievements_per_level, get_count_achievement, \
+    max_attempt
 
 pygame.init()
 
@@ -103,17 +103,20 @@ def show_main_menu(events):
         if about_the_authors.is_pressed(event):
             about_the_authors.function()
 
+
 def next_attempt():
     global SELECTED_ATTEMPT
     if SELECTED_ATTEMPT == max_attempt():
         return
     SELECTED_ATTEMPT += 1
 
+
 def back_attempt():
     global SELECTED_ATTEMPT
     if SELECTED_ATTEMPT == 0:
         return
     SELECTED_ATTEMPT -= 1
+
 
 def draw_achievements(events):
     global selected_achievement

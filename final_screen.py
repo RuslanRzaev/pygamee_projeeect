@@ -47,11 +47,9 @@ def final_screen(lives_left, window, current_attempt):
                 if check_rect.collidepoint(pygame.mouse.get_pos()):
                     VICTORY_SOUND.stop()
                     run = False
-                    pygame.display.set_mode((800, 600))
 
             if event.type == pygame.QUIT:
                 VICTORY_SOUND.stop()
                 run = False
-                pygame.display.set_mode((800, 600))
 
         pygame.display.flip()
