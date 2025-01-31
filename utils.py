@@ -2,6 +2,7 @@ import random
 import sqlite3
 import sys
 from datetime import datetime
+from dis import code_info
 
 from config import *
 import pygame
@@ -11,6 +12,39 @@ from achievement import Achievement
 con = sqlite3.connect("db/game.db")
 cur = con.cursor()
 screen = pygame.display.set_mode(SIZE)
+
+title1 = 'Рыбы дуреют с этой прикормки'
+desc1 = 'Успешно сбежать от хищных рыб'
+
+title2 = 'Крутой Джа-Джа'
+desc2 = 'Не умереть на первом уровне'
+
+
+def add_to_db_sqlite(level, attempt, title, desc, image, date, achieved=0):
+    cur.execute(f"""INSERT INTO level{str(level)} (attempt, title, description, image, date, achieved)
+                    VALUES ('{attempt}', '{title}', '{desc}', '{image}', '{date}', {achieved});""").fetchall()
+    con.commit()
+
+
+def initialize_database():
+    for level in ['level1', 'level2']:
+        cur.execute(f'''CREATE TABLE IF NOT EXISTS {level} (
+        attempt INTEGER,
+        title TEXT,
+        description TEXT,
+        image TEXT,
+        date TEXT,
+        achieved)''')
+    cur.execute("SELECT COUNT(*) FROM level1")
+    count = cur.fetchone()[0]
+    if not count:
+        add_to_db_sqlite(1, 0, title1, desc1, 'карасики.png', None, 0)
+        add_to_db_sqlite(1, 0, title2, desc2, 'ja.png', None, 0)
+        add_to_db_sqlite(2, 0, 'Восход Скайуокера', 'Все вражеские корабли уничтожены', 'icon_3_1.png', None, 0)
+        add_to_db_sqlite(2, 0, 'Неуловимый Татуинец', 'Не потеряно ни одной жизни', 'icon_3_1.png', None, 0)
+
+
+initialize_database()
 
 
 def collide(obj1, obj2):
@@ -24,12 +58,6 @@ def text_bg(label, col=(45, 131, 182)):
     text_bg.fill(col)
 
     return text_bg
-
-
-def add_to_db_sqlite(level, attempt, title, desc, img, date, achieved=0):
-    con.execute(f"""INSERT INTO level{str(level)} (attempt, title, description, image, date, achieved)
-                    VALUES ('{attempt}', '{title}', '{desc}', '{img}', '{date}', {achieved});""").fetchall()
-    con.commit()
 
 
 def delete_duplicates_sqlite(level):
@@ -66,6 +94,7 @@ def load_image(
 
 def terminate() -> None:
     pygame.quit()
+    sys.exit()
 
 
 def generate_obstacles(objtop, objbottom):
@@ -142,20 +171,15 @@ def show_devices(screen, player, font):
     screen.blit(time, (WIDTH - 200, 60))
 
 
-title1 = 'Рыбы дуреют с этой прикормки'
-desc1 = 'Успешно сбежать от хищных рыб'
-
-title2 = 'Крутой Джа-Джа'
-desc2 = 'Не умереть на первом уровне'
-
 achievement_fish = Achievement(1100, 100, ACHIEVEMENT_BG, title1, desc1, KARASIKI)
 
 achievement_ja_ja = Achievement(1100, 100, ACHIEVEMENT_BG, title2, desc2, ACHIEVEMENT_3_1)
 
 showed_a = False
 showed_a_ja = False
-len_db_level_1 = con.execute("SELECT COUNT (*) FROM level1").fetchone()
-current_attempt = 1 if int(len_db_level_1[0]) < 1 else len_db_level_1[0]
+
+len_db_level_1 = con.execute("SELECT max(attempt) FROM level1").fetchone()
+current_attempt = len_db_level_1[0] + 1
 
 
 def timings(screen, problem_sound, TIME_GAME, fish_group, big_fish_group, font, player):
@@ -200,7 +224,7 @@ def timings(screen, problem_sound, TIME_GAME, fish_group, big_fish_group, font, 
         player.rect.x += 5
         player.rect.y -= 3
         if not showed_a_ja:
-            add_to_db_sqlite(1, current_attempt, title2, desc2, 'icon_3_1.png',
+            add_to_db_sqlite(1, current_attempt, title2, desc2, 'ja.png',
                              str(datetime.now())[:-7],
                              1)
             showed_a_ja = True
@@ -224,12 +248,19 @@ def get_achievements(attempt=None):
         else:
             cur.execute(f'SELECT * FROM level{i}')
         achievements.extend([achievement + (i,) for achievement in cur.fetchall()])
-    return achievements
+    seen_titles = set()
+    unique_data = []
+    for record in achievements:
+        title = record[1]
+        if title not in seen_titles:
+            seen_titles.add(title)
+            unique_data.append(record)
+    return unique_data
 
 
 def get_number_of_achievements_per_level(level: int) -> int:
     try:
-        count = cur.execute(f'SELECT count(*) FROM level{level}').fetchall()
+        count = cur.execute(f'SELECT count(*) FROM level{level} WHERE achieved = 1').fetchall()
         if count:
             return int(count[0][0])
     except sqlite3.OperationalError:
@@ -237,8 +268,12 @@ def get_number_of_achievements_per_level(level: int) -> int:
 
 
 def get_count_achievement(level, name_achievement: str) -> int:
-    count = cur.execute(f'SELECT count(*) FROM level{level} WHERE title == "{name_achievement}"').fetchall()
+    count = cur.execute(f'SELECT count(*) FROM level{level} WHERE title == "{name_achievement}" AND achieved = 1').fetchall()
     return int(count[0][0])
+
+
+def max_attempt() -> int:
+    return cur.execute(f'SELECT max(attempt) FROM level1').fetchall()[0][0]
 
 
 PLAYER_HIT = pygame.event.custom_type()

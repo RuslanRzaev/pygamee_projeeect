@@ -1,5 +1,6 @@
 import pygame
 
+from pygamee_projeeect.utils import max_attempt
 from utils import load_image, get_achievements, terminate, get_number_of_achievements_per_level, get_count_achievement
 
 pygame.init()
@@ -23,6 +24,8 @@ SCREEN_MAIN_MENU = "main_menu"
 SCREEN_ACHIEVEMENTS = "achievements"
 SCREEN_ACHIEVEMENT_DETAIL = "achievement_detail"
 SCREEN_ABOUT_AUTHOR = 'about_author'
+
+SELECTED_ATTEMPT = 0
 
 current_screen = SCREEN_MAIN_MENU
 
@@ -100,14 +103,30 @@ def show_main_menu(events):
         if about_the_authors.is_pressed(event):
             about_the_authors.function()
 
+def next_attempt():
+    global SELECTED_ATTEMPT
+    if SELECTED_ATTEMPT == max_attempt():
+        return
+    SELECTED_ATTEMPT += 1
+
+def back_attempt():
+    global SELECTED_ATTEMPT
+    if SELECTED_ATTEMPT == 0:
+        return
+    SELECTED_ATTEMPT -= 1
 
 def draw_achievements(events):
     global selected_achievement
 
-    achievements = get_achievements()
+    achievements = get_achievements(SELECTED_ATTEMPT)
     y_offset = 100
     back_button = Button(10, 10, 100, 40, "Назад", lambda: set_screen(SCREEN_MAIN_MENU))
-
+    button_back_attempt = Button(WIDTH // 2, 50, 120, 40, 'Back', lambda: back_attempt())
+    button_back_attempt.draw(screen)
+    attempt_level = font.render(f'{SELECTED_ATTEMPT} attempt', True, BUTTON_COLOR)
+    screen.blit(attempt_level, (WIDTH // 2 + 130, 50))
+    button_next = Button(WIDTH // 2 + 270, 50, 120, 40, 'Next', lambda: next_attempt())
+    button_next.draw(screen)
     for achievement_data in achievements:
         achievement = Achievement(*achievement_data)
         achievement.draw(screen, 50, y_offset)
@@ -125,6 +144,10 @@ def draw_achievements(events):
     for event in events:
         if back_button.is_pressed(event):
             back_button.function()
+        if button_back_attempt.is_pressed(event):
+            button_back_attempt.function()
+        if button_next.is_pressed(event):
+            button_next.function()
     if get_number_of_achievements_per_level(1):
         count_of_achievements_1 = font.render(f'1 LEVEL: {get_number_of_achievements_per_level(1)}', True, BUTTON_COLOR)
         screen.blit(count_of_achievements_1, (600, 500))
